@@ -1,3 +1,4 @@
+#define mp make_pair
 using pint = pair<int, int>;
 using vp = vector<pint>;
 vector<string> wall(int H, int W, char c) {

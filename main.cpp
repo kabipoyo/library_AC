@@ -9,10 +9,14 @@ typedef int64_t lint;
 
 #define mp make_pair
 using pint = pair<int, int>;
+using vp = vector<pint>;
+#define mt make_tuple
 using tint = tuple<int, int, int>;
+using vt = vector<tint>;
 
-using mint = modint1000000007;
 using mint = modint998244353;
+using mint = modint1000000007;
+using vm = vector<mint>;
 
 constexpr double PI=3.14159265358979323846;
 constexpr int INF = INT_MAX/2;
