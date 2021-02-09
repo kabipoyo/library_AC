@@ -1,9 +1,9 @@
 // 根付き木生成のための深さ探索
-
-vi rooted_tree(vvi v) {
+// bfs に移植済み
+vector<int> rooted_tree(vector<vector<int>> v, int root) {
 	queue<int> q;
-	vi d(v.size()), u(v.size());
-	q.push(0), u[0]++;
+	vector<int> d(v.size()), u(v.size());
+	q.push(root), u[root]++;
 	while (!q.empty()) {
 		int x = q.front();
 		q.pop();
