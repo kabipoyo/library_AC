@@ -24,8 +24,12 @@ constexpr lint LINF = LLONG_MAX/2;
 
 template<class T> inline void drop(T x) { cout << x << endl; exit(0); }
 
-template<class T> inline void vecout(vector<T> v) {
+template<class T> inline void vout(vector<T> v) {
 	rep(i, v.size()) { cout << v.at(i) << ' '; } cout << endl;
+}
+
+template<class T> inline void vvout(vector<T> v) {
+	rep(i, v.size()) { rep(j, v[i].size()) { cout << v.at(i).at(j) << ' '; } cout << endl; }
 }
 
 template <typename T>

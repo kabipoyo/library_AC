@@ -15,7 +15,7 @@ int bfs(vector<string> &v, int H, int W) {
 	int dy[4] = {0, -1, 0, 1};
 	int a=0, x, y, z;
 	queue<pint> Q;
-	vvi m(H+2, vi(W+2));
+	vector<vector<int>> m(H+2, vi(W+2));
 	Q.push(make_pair(1, 1)), m[1][1] = 1;
 	while (!Q.empty()) {
 		tie(x, y) = Q.front();

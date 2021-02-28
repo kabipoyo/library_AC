@@ -1,8 +1,8 @@
 // グラフ作成
 vector<vector<int>> G(300000);
-void make_graph(int N) {
+void make_graph(int M) {
 	int x, y;
-	rep(i, N-1) {
+	rep(i, M) {
 		cin >> x >> y;
 		x--, y--;
 		G[x].push_back(y);
@@ -29,9 +29,9 @@ void bfs(int root) {
 
 // 重みつきグラフ作成
 vector<vector<pair<int, lint>>> G(300000);
-void make_dist_graph(int N) {
+void make_dist_graph(int M) {
 	int x, y, z;
-	rep(i, N-1) {
+	rep(i, M) {
 		cin >> x >> y >> z;
 		x--, y--;
 		G[x].push_back(make_pair(y, z));

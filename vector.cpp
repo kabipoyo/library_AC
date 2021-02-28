@@ -5,6 +5,8 @@ using namespace atcoder;
 typedef int64_t lint;
 #define rep(i, n) for(int i=0; i<n; i++)
 #define all(v) v.begin(), v.end()
+#define show(x) cout << #x << " = " << x << endl;
+#define list(x) cout << #x << ": " << x << "  ";
 #define pb push_back
 using vi = vector<int>;
 using vvi = vector<vector<int>>;

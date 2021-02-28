@@ -1,6 +1,6 @@
 constexpr int INF = INT_MAX/2;
 int node, start;
-vvi dist(18, vi(18));　// 事前に準備しておく
+vvi dist(18, vi(18));  // 事前に準備しておく
 vector<vector<int>> dp((1<<18), vector<int>(18, -1));
 
 int rec(int bit, int v) {
@@ -21,6 +21,6 @@ int bitDP(int n, int s) {
 	return res;
 }
 
-int get_dest(int d) {
+int get_dest(int N, int d) {
 	return dp[(1<<N)-1][d]; // 終点が地点 d の最短経路
 }
