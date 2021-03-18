@@ -1,11 +1,3 @@
-#include <bits/stdc++.h>
-#include <atcoder/all>
-using namespace std;
-using namespace atcoder;
-
-typedef int64_t lint;
-
-#define rep(i, n) for(int i=0; i<n; i++)
 
 #define mp make_pair
 using pint = pair<int, int>;
@@ -22,14 +14,25 @@ constexpr double PI=3.14159265358979323846;
 constexpr int INF = INT_MAX/2;
 constexpr lint LINF = LLONG_MAX/2;
 
-template<class T> inline void drop(T x) { cout << x << endl; exit(0); }
-
-template<class T> inline void vout(vector<T> v) {
-	rep(i, v.size()) { cout << v.at(i) << ' '; } cout << endl;
-}
-
 template<class T> inline void vvout(vector<T> v) {
 	rep(i, v.size()) { rep(j, v[i].size()) { cout << v.at(i).at(j) << ' '; } cout << endl; }
+}
+
+priority_queue<int, vector<int>, greater<int>> q;
+
+// 二分探索 O(logN)
+auto iter_l = lower_bound(all(v), key);
+auto iter_u = upper_bound(all(v), key);
+
+// インデックスを取得 O(N)
+int idx_l = distance(v.begin(), iter_l);
+int idx_u = distance(v.begin(), iter_u);
+
+int main() {
+	int N;
+	cout << fixed << setprecision(10) << N << endl;
+	cin >> N;
+	int a=0, b=0, c=0, x, y, z;
 }
 
 template <typename T>
@@ -39,11 +42,4 @@ vector<T> make_v(size_t a) {
 template <typename T, typename... Ts>
 auto make_v(size_t a, Ts... ts) {
 	return vector<decltype(make_v<T>(ts...))>(a, make_v<T>(ts...));
-}
-
-int main() {
-	int N;
-	cout << fixed << setprecision(10) << N << endl;
-	cin >> N;
-	int a=0, b=0, c=0, x, y, z;
 }
