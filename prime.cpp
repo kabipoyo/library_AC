@@ -66,6 +66,8 @@ bool isPrime(lint n) {
 	}
 	return true;
 }
+
+// 素因数を返す　返り値に１は入らない
 vector<lint> factor(lint n) {
 	vector<lint> V;
 	if (!(n % 2)) {
@@ -89,6 +91,8 @@ vector<lint> factor(lint n) {
 	if (n != 1) V.push_back(n);
 	return V;
 }
+
+// 素因数分解する　返り値に１は入らない
 vector<lint> factorList(lint n) {
 	vector<lint> V;
 	if (!(n % 2)) {

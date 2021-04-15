@@ -33,6 +33,19 @@ void make_round_graph(int N, int M) {
 	}
 }
 
+// 無向グラフ
+vector<vector<pair<lint, lint>>> G;
+void make_graph(int N, int M) {
+	lint x, y;
+	G.resize(N);
+	rep(i, M) {
+		cin >> x >> y;
+		x--, y--;
+		G[x].push_back(make_pair(1, y));
+		G[y].push_back(make_pair(1, x));
+	}
+}
+
 void dijkstra(int start, vector<lint> &dist) {
 	lint a=0, b=0, x, y, N = G.size();
 	dist.resize(N, LINF); dist[start] = 0;

@@ -1,6 +1,7 @@
 // グラフ作成
-vector<vector<int>> G(300000);
-void make_graph(int M) {
+vector<vector<int>> G;
+void make_graph(int N, int M) {
+	G.resize(N);
 	int x, y;
 	rep(i, M) {
 		cin >> x >> y;
@@ -12,11 +13,11 @@ void make_graph(int M) {
 
 // root からの距離算出
 // 根付き木生成のための深さ探索など
-vector<int> dist(300000);
+vector<int> dist;
 void bfs(int root) {
-	int x, y;
+	int x, y, z, N = G.size();
+	dist.resize(N, -1);
 	queue<int> Q;
-	fill(dist.begin(), dist.end(), -1);
 	Q.push(root), dist[root] = 0;
 	while (!Q.empty()) {
 		x = Q.front(); Q.pop();
@@ -53,4 +54,26 @@ void bfs_dist(int root) {
 			if (dist[y] == -1) { Q.push(y); dist[y] = dist[x]+z; }
 		}
 	}
+}
+
+/* topo_sort(G): グラフG をトポロジカルソート
+	返り値: トポロジカルソートされた頂点番号
+	計算量: O(|E|+|V|)
+ */
+vector<int> topo_sort() {
+	vector<int> res;
+	int N = (int)G.size();
+	vector<int> v(N);
+	rep(i, N) { for (auto e : G[i]) v[e]++; }
+	queue<int> Q;
+	rep(i, N) { if (!v[i]) Q.push(i); }
+	while (!Q.empty()) {
+		int x = Q.front(); Q.pop();
+		res.push_back(x);
+		for (auto e : G[x]) {
+			v[e]--;
+			if (!v[e]) Q.push(e);
+		}
+	}
+	return res;
 }

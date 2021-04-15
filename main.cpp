@@ -21,8 +21,11 @@ template<class T> inline void vvout(vector<T> v) {
 priority_queue<int, vector<int>, greater<int>> q;
 
 // 二分探索 O(logN)
-auto iter_l = lower_bound(all(v), key);
-auto iter_u = upper_bound(all(v), key);
+auto l = lower_bound(all(v), key);
+auto u = upper_bound(all(v), key);
+// set型二分探索 O(logN)
+auto l = s.lower_bound(key);
+auto u = s.upper_bound(key);
 
 // インデックスを取得 O(N)
 int idx_l = distance(v.begin(), iter_l);
