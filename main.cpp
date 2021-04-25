@@ -18,6 +18,7 @@ template<class T> inline void vvout(vector<T> v) {
 	rep(i, v.size()) { rep(j, v[i].size()) { cout << v.at(i).at(j) << ' '; } cout << endl; }
 }
 
+// 小さい順の優先度付きキュー
 priority_queue<int, vector<int>, greater<int>> q;
 
 // 二分探索 O(logN)
@@ -26,6 +27,11 @@ auto u = upper_bound(all(v), key);
 // set型二分探索 O(logN)
 auto l = s.lower_bound(key);
 auto u = s.upper_bound(key);
+
+// multiset １個だけ消去
+s.erase(s.find(x));
+// multiset 所属判定（countは x の要素数に対して線形時間かかる）
+if (s.find(x) != s.end())
 
 // インデックスを取得 O(N)
 int idx_l = distance(v.begin(), iter_l);

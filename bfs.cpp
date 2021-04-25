@@ -77,3 +77,67 @@ vector<int> topo_sort() {
 	}
 	return res;
 }
+
+/* tree_diamiter : bfs を用いて木の直径を求める
+	計算量: O(N)
+*/
+#define mp make_pair
+using pint = pair<int, int>;
+vector<int> dist;
+int bfs(int root) {
+	int a=-1, b=0, x, y, N = G.size();
+	dist.clear();
+	dist.resize(N, -1);
+	queue<int> Q;
+	Q.push(root), dist[root] = 0;
+	while (!Q.empty()) {
+		x = Q.front(); Q.pop();
+		rep(i, G[x].size()) {
+			y = G[x][i];
+			if (dist[y] == -1) { Q.push(y); dist[y] = dist[x]+1; }
+		}
+		if (chmax(b, dist[x])) a = x;
+	}
+	return x;
+}
+pair<int, int> tree_diamiter() {
+	int p = bfs(0);
+	int q = bfs(p);
+	return make_pair(p, q);
+}
+
+// dist配列があるときに、root から node の最短経路を復元する
+vi root_to_node(int root, int node) {
+	vi v = {node};
+	while (dist[node]) {
+		int d = dist[node];
+		rep(i, G[node].size()) {
+			if (dist[G[node][i]] == d-1) {
+				v.pb(G[node][i]);
+				node = G[node][i];
+				break;
+			}
+		}
+	}
+	reverse(all(v));
+	return v;
+}
+
+// 二部グラフの頂点彩色
+// ２点を別の色で塗る
+void another_color(dsu &d, int N, int i, int j) {
+	d.merge(i+N, j);
+	d.merge(i, j+N);
+}
+// ２点を同じ色で塗る
+void same_color(dsu &d, int N, int i, int j) {
+	d.merge(i, j);
+	d.merge(i+N, j+N);
+}
+// グラフの塗分けが可能か？
+bool is_bipartite(dsu &d, int N) {
+	rep(i, N) {
+		if (d.same(i, i+N)) return false;
+	}
+	return true;
+}
