@@ -33,6 +33,9 @@ s.erase(s.find(x));
 // multiset 所属判定（countは x の要素数に対して線形時間かかる）
 if (s.find(x) != s.end())
 
+// 1の数を数えるっぽい
+__builtin_popcount(bit);
+
 // インデックスを取得 O(N)
 int idx_l = distance(v.begin(), iter_l);
 int idx_u = distance(v.begin(), iter_u);
