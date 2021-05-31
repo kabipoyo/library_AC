@@ -1,3 +1,13 @@
+// コードの切れ端
+
+// 座標圧縮
+template<class T> map<T, int> coord_comp(set<T> s) {
+	int a = 0;
+	map<T, int> m;
+	for (auto u : s) m[u] = ++a;
+	return m;
+}
+
 // x = binary_search(&v, key);
 
 // key 以上の最小の値がある要素番号を返す

@@ -36,16 +36,19 @@ if (s.find(x) != s.end())
 // 1の数を数えるっぽい
 __builtin_popcount(bit);
 
+// 2秒未満でやめる
+if(clock() < 1.98 * CLOCKS_PER_SEC)
+
 // インデックスを取得 O(N)
 int idx_l = distance(v.begin(), iter_l);
 int idx_u = distance(v.begin(), iter_u);
 
-int main() {
-	int N;
-	cout << fixed << setprecision(10) << N << endl;
-	cin >> N;
-	int a=0, b=0, c=0, x, y, z;
-}
+// double 出力
+cout << fixed << setprecision(10) << N << endl;
+
+// ラジアンー度　変換
+#define deg_to_rad(deg) (((deg)/360)*2*PI)
+#define rad_to_deg(rad) (((rad)/2/PI)*360)
 
 template <typename T>
 vector<T> make_v(size_t a) {
@@ -54,4 +57,10 @@ vector<T> make_v(size_t a) {
 template <typename T, typename... Ts>
 auto make_v(size_t a, Ts... ts) {
 	return vector<decltype(make_v<T>(ts...))>(a, make_v<T>(ts...));
+}
+
+int main() {
+	int N;
+	cin >> N;
+	int a=0, b=0, c=0, x, y, z;
 }

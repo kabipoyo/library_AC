@@ -42,6 +42,16 @@ mint divide_comb(int N, int K) {
 	return C(N-1, K-1);
 }
 
+// C(60, 30) ぐらいまでなら収まる
+lint combination (int n, int k) {
+	lint ans = 1;
+	rep(i, k) {
+		ans *= (n-i);
+		ans /= (i+1);
+	}
+	return ans;
+};
+
 // 階乗を計算する
 vector<mint> _factionals = {0,1};
 mint factional(long long n) {

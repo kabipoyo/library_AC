@@ -16,6 +16,7 @@ template<class T> inline bool chmax(T& a, T b) { if (a < b) { a = b; return 1; }
 template<class T> inline bool chmin(T& a, T b) { if (a > b) { a = b; return 1; } return 0; }
 template<class T> inline void drop(T x) { cout << x << endl; exit(0); }
 template<class T> void vout(vector<T> v) { rep(i, v.size()) { cout << v.at(i) << ' '; } cout << endl; }
+constexpr int INF = INT_MAX/2;
 
 int main() {
 	int N;
