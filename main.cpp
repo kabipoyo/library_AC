@@ -1,9 +1,9 @@
 
 #define mp make_pair
-using pint = pair<int, int>;
+using pint = pair<lint, lint>;
 using vp = vector<pint>;
 #define mt make_tuple
-using tint = tuple<int, int, int>;
+using tint = tuple<lint, lint, lint>;
 using vt = vector<tint>;
 
 using mint = modint998244353;
@@ -19,7 +19,7 @@ template<class T> inline void vvout(vector<T> v) {
 }
 
 // 小さい順の優先度付きキュー
-priority_queue<int, vector<int>, greater<int>> q;
+priority_queue<lint, vector<lint>, greater<lint>> q;
 
 // 二分探索 O(logN)
 auto l = lower_bound(all(v), key);
@@ -37,7 +37,8 @@ if (s.find(x) != s.end())
 __builtin_popcount(bit);
 
 // 2秒未満でやめる
-if(clock() < 1.98 * CLOCKS_PER_SEC)
+int TIME=clock();
+if (clock()-TIME > 1.98 * CLOCKS_PER_SEC) break;
 
 // インデックスを取得 O(N)
 int idx_l = distance(v.begin(), iter_l);
