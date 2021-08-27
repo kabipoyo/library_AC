@@ -22,6 +22,7 @@ template<class T> inline void vvout(vector<T> v) {
 priority_queue<lint, vector<lint>, greater<lint>> q;
 
 // 二分探索 O(logN)
+// v.begin() を引くと index
 auto l = lower_bound(all(v), key);
 auto u = upper_bound(all(v), key);
 // set型二分探索 O(logN)
