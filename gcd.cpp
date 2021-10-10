@@ -17,3 +17,31 @@ lint modinv(lint a, lint m) {
 	extgcd(a, m, x, y);
 	return (m + x % m) % m;
 }
+
+// a/b % m
+lint moddiv(lint a, lint b, lint m) {
+	return (a * modinv(b, m)) %m;
+}
+
+// 離散対数問題
+// X^a = Y mod M を満たす最小の a を O(√M) で求める
+lint baby_step_giant_step(lint X, lint Y, lint M) {
+	if (__gcd(X, M) != 1) return -1;
+	lint m = ceil(sqrt(M));
+	// baby-step
+	lint a = 1;
+	unordered_map<lint, lint> p;
+	rep(i, m) {
+		a = (a*X) % M;
+		if (!p.count(a)) p[a] = i+1;
+	}
+	// giant_step
+	lint b = 1;
+	rep(i, m) b = moddiv(b, X, M);
+	lint c = Y;
+	rep(i, m) {
+		if (p.count(c)) return m*i+p[c];
+		c = (c*b) % M;
+	}
+	return -1;
+}

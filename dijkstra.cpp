@@ -77,3 +77,40 @@ lint go_to(int start, int goal) {
 	dijkstra(start, v);
 	return v[goal];
 }
+
+/* 経路復元 dijkstra(G,s,dis,prev)
+	入力：グラフ G, 開始点 s, 距離を格納する dis, 最短経路の前の点を記録するprev
+	計算量：O(|E|log|V|)
+	副作用：dis, prevが書き換えられる
+*/
+void dijkstra_list(int start, vector<lint> &dist, vector<lint> &prev) {
+	lint a=0, b=0, x, y, N = G.size();
+	dist.resize(N, LINF); dist[start] = 0;
+	prev.resize(N, -1);
+	priority_queue<pint, vector<pint>, greater<pint>> PQ;
+	PQ.push(make_pair(0, start));
+	while (!PQ.empty()) {
+		tie(x, a) = PQ.top(); PQ.pop();
+		if (dist[a] < x) continue;
+		for (auto p : G[a]) {
+			tie(y, b) = p;
+			if (chmin(dist[b], x+y)) {
+				prev[b] = a;
+				PQ.push(make_pair(x+y, b));
+			}
+		}
+	}
+}
+/* get_path(prev, t)
+	入力：dijkstra で得た prev, ゴール t
+	出力： t への最短路のパス
+	最短経路がない場合は事前に場合分けをすること
+*/
+vector<lint> get_path(vector<lint> &prev, int t) {
+	vector<lint> path;
+	for (int cur = t; cur != -1; cur = prev[cur]) {
+		path.push_back(cur);
+	}
+	reverse(path.begin(), path.end()); // 逆順なのでひっくり返す
+	return path;
+}

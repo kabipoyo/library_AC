@@ -1,9 +1,9 @@
 // グラフ作成
 vector<vector<int>> G;
-void make_graph(int N, int M) {
+void make_graph(int N) {
 	G.resize(N);
 	int x, y;
-	rep(i, M) {
+	rep(i, N-1) {
 		cin >> x >> y;
 		x--, y--;
 		G[x].push_back(y);
