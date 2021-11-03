@@ -3,7 +3,7 @@
 // Sieve S(N);
 struct Sieve {
 	int n;
-	vector<int> p;
+	vector<lint> p;
 	Sieve(int n=1):n(n), p(n+1) {
 		p.at(0) = -1, p.at(1) = -1;
 		for(lint i=2; i<=n; i++) {
@@ -16,16 +16,16 @@ struct Sieve {
 		}
 	}
 	bool isPrime(int x) { return p.at(x) == x;}
-	vector<int> factorList(int x) {
-		vector<int> v;
+	vector<lint> factorList(int x) {
+		vector<lint> v;
 		while (x != 1) {
 			v.push_back(p.at(x));
 			x /= p.at(x);
 		}
 		return v;
 	}
-	vector<int> factor(int x) {
-		vector<int> v;
+	vector<lint> factor(int x) {
+		vector<lint> v;
 		while (x != 1) {
 			int t = p.at(x);
 			v.push_back(t);

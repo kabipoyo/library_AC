@@ -1,4 +1,5 @@
 /* Kruskal :クラスカル法で minimum spanning tree (最小全域木) を求める
+	コストの和が最小になるように木を構築する
 	入力: 辺のvector, 頂点数V
 	最小全域木の重みの総和: res
 	計算量: O(|E|log|E|)

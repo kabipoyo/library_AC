@@ -10,12 +10,12 @@ vector<string> wall(int H, int W, char c) {
 	return v;
 }
 
-int bfs(vector<string> &v, int H, int W) {
+lint bfs(vector<string> &v, int H, int W) {
 	int dx[4] = {-1, 0, 1, 0};
 	int dy[4] = {0, -1, 0, 1};
-	int a=0, x, y, z;
+	lint a=0, x, y, z;
 	queue<pint> Q;
-	vector<vector<int>> m(H+2, vi(W+2));
+	vector<vector<lint>> m(H+2, vi(W+2));
 	Q.push(make_pair(1, 1)), m[1][1] = 1;
 	while (!Q.empty()) {
 		tie(x, y) = Q.front();
@@ -33,11 +33,11 @@ int bfs(vector<string> &v, int H, int W) {
 }
 
 int main() {
-	int H, W;
+	lint H, W;
 	cin >> H >> W;
 	vector<string> v = wall(H, W, '#');
-	int h = H+2, w = W+2;
+	lint h = H+2, w = W+2;
 
-	int a=0, b=0, c=0, x, y, z;
+	lint a=0, b=0, c=0, x, y, z;
 	cout << bfs(v, H, W) << '\n';
 }
