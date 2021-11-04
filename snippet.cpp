@@ -31,3 +31,16 @@ template<class T> inline int binary_search_max(vector<T> &v, T key) {
 	}
 	return ok;
 }
+
+// 原点からの極座標の角度の大きい順に番号を付ける（0<=Θ<=π/2）
+using pint = pair<lint, lint>;
+using vp = vector<pint>;
+map<pint, lint> polar_sort(vp v) {
+	sort(all(v), [](auto const& lhs, auto const& rhs) {
+		return lhs.first*rhs.second < rhs.first*lhs.second;
+	});
+	map<pint, lint> m;
+	lint a = 0;
+	for (auto p : v) m[p] = ++a;
+	return m;
+}
