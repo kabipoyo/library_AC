@@ -23,6 +23,26 @@ lint moddiv(lint a, lint b, lint m) {
 	return (a * modinv(b, m)) %m;
 }
 
+// 除算を掛け算に変換しておく
+vi div(200200);
+repx(i, 1, 200200) div[i] = modinv(i, 998244353);
+
+// a^b % m  O(logb)
+lint modpow(lint a, lint b, lint M) {
+	lint x = 1;
+	vi v(100);
+	v[0] = a;
+	rep(i, 100-1) {
+		if ((1L<<i) > b) break;
+		v[i+1] = (v[i]*v[i]) % M;
+	}
+	rep(i, 100-1) {
+		if ((1L<<i) > b) break;
+		if ((1L<<i) & b) x = (x*v[i]) % M;
+	}
+	return x;
+}
+
 // 離散対数問題
 // X^a = Y mod M を満たす最小の a を O(√M) で求める
 lint baby_step_giant_step(lint X, lint Y, lint M) {

@@ -66,3 +66,8 @@ lint combination (int n, int k) {
 	}
 	return ans;
 };
+
+// 二項係数が奇数ならtrue
+bool is_nCk_odd(int n, int k){
+	return (n&k)==k;
+}

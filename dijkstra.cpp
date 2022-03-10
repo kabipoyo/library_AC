@@ -9,7 +9,7 @@ using pint = pair<lint, lint>;
 
 // 重みつきグラフを生成
 vector<vector<pair<lint, lint>>> G;
-void make_dist_graph(int N, int M) {
+void make_dist_graph(lint N, lint M) {
 	lint x, y, z;
 	G.resize(N);
 	rep(i, M) {
@@ -22,7 +22,7 @@ void make_dist_graph(int N, int M) {
 // 重みつきグラフを行き・帰りで生成
 vector<vector<pair<lint, lint>>> G;
 vector<vector<pair<lint, lint>>> R;
-void make_round_graph(int N, int M) {
+void make_round_graph(lint N, lint M) {
 	lint x, y, z;
 	G.resize(N), R.resize(N);
 	rep(i, M) {
@@ -35,7 +35,7 @@ void make_round_graph(int N, int M) {
 
 // 無向グラフ
 vector<vector<pair<lint, lint>>> G;
-void make_graph(int N, int M) {
+void make_graph(lint N, lint M) {
 	lint x, y;
 	G.resize(N);
 	rep(i, M) {
@@ -46,7 +46,7 @@ void make_graph(int N, int M) {
 	}
 }
 
-void dijkstra(int start, vector<lint> &dist) {
+void dijkstra(lint start, vector<lint> &dist) {
 	lint a=0, b=0, x, y, N = G.size();
 	dist.resize(N, LINF); dist[start] = 0;
 	priority_queue<pint, vector<pint>, greater<pint>> PQ;
@@ -62,7 +62,7 @@ void dijkstra(int start, vector<lint> &dist) {
 }
 
 // start から start までの最短距離
-lint come_back(int start) {
+lint come_back(lint start) {
 	vector<lint> go, re;
 	lint x = LINF;
 	dijkstra(start, go); swap(G, R);
@@ -72,7 +72,7 @@ lint come_back(int start) {
 }
 
 // start から goal までの最短距離
-lint go_to(int start, int goal) {
+lint go_to(lint start, lint goal) {
 	vector<lint> v;
 	dijkstra(start, v);
 	return v[goal];
@@ -83,7 +83,7 @@ lint go_to(int start, int goal) {
 	計算量：O(|E|log|V|)
 	副作用：dis, prevが書き換えられる
 */
-void dijkstra_list(int start, vector<lint> &dist, vector<lint> &prev) {
+void dijkstra_list(lint start, vector<lint> &dist, vector<lint> &prev) {
 	lint a=0, b=0, x, y, N = G.size();
 	dist.resize(N, LINF); dist[start] = 0;
 	prev.resize(N, -1);
@@ -106,9 +106,9 @@ void dijkstra_list(int start, vector<lint> &dist, vector<lint> &prev) {
 	出力： t への最短路のパス
 	最短経路がない場合は事前に場合分けをすること
 */
-vector<lint> get_path(vector<lint> &prev, int t) {
+vector<lint> get_path(vector<lint> &prev, lint t) {
 	vector<lint> path;
-	for (int cur = t; cur != -1; cur = prev[cur]) {
+	for (lint cur = t; cur != -1; cur = prev[cur]) {
 		path.push_back(cur);
 	}
 	reverse(path.begin(), path.end()); // 逆順なのでひっくり返す
