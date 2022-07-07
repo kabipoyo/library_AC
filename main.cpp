@@ -18,6 +18,9 @@ template<class T> inline void vvout(vector<T> v) {
 	rep(i, v.size()) { rep(j, v[i].size()) { cout << v.at(i).at(j) << ' '; } cout << endl; }
 }
 
+// sqrt(lint)の精度は足りなくなるのでこれを使う
+a = sqrtl(x);
+
 // 小さい順の優先度付きキュー
 priority_queue<lint, vector<lint>, greater<lint>> q;
 

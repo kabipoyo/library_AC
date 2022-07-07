@@ -3,8 +3,8 @@
 using namespace std;
 using namespace atcoder;
 typedef int64_t lint;
-#define rep(i, n) for(int i=0; i<n; i++)
-#define repx(i, l, n) for(int i=l; i<n; i++)
+#define rep(i, n) for(lint i=0; i<n; i++)
+#define repx(i, l, n) for(lint i=l; i<n; i++)
 #define all(v) v.begin(), v.end()
 #define show(x) cout << #x << ": " << x << endl;
 #define list(x) cout << #x << ": " << x << "  ";
