@@ -7,45 +7,6 @@ constexpr lint LINF = LLONG_MAX/2;
 #define mp make_pair
 using pint = pair<lint, lint>;
 
-// 重みつきグラフを生成
-vector<vector<pair<lint, lint>>> G;
-void make_dist_graph(lint N, lint M) {
-	lint x, y, z;
-	G.resize(N);
-	rep(i, M) {
-		cin >> x >> y >> z;
-		x--, y--;
-		G[x].push_back(make_pair(z, y));
-	}
-}
-
-// 重みつきグラフを行き・帰りで生成
-vector<vector<pair<lint, lint>>> G;
-vector<vector<pair<lint, lint>>> R;
-void make_round_graph(lint N, lint M) {
-	lint x, y, z;
-	G.resize(N), R.resize(N);
-	rep(i, M) {
-		cin >> x >> y >> z;
-		x--, y--;
-		G[x].push_back(make_pair(z, y));
-		R[y].push_back(make_pair(z, x));
-	}
-}
-
-// 無向グラフ
-vector<vector<pair<lint, lint>>> G;
-void make_graph(lint N, lint M) {
-	lint x, y;
-	G.resize(N);
-	rep(i, M) {
-		cin >> x >> y;
-		x--, y--;
-		G[x].push_back(make_pair(1, y));
-		G[y].push_back(make_pair(1, x));
-	}
-}
-
 void dijkstra(lint start, vector<lint> &dist) {
 	lint a=0, b=0, x, y, N = G.size();
 	dist.resize(N, LINF); dist[start] = 0;
