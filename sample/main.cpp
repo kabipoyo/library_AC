@@ -1,16 +1,15 @@
 
 #define mp make_pair
+#define mt make_tuple
 using pint = pair<lint, lint>;
 using vp = vector<pint>;
-#define mt make_tuple
 using tint = tuple<lint, lint, lint>;
 using vt = vector<tint>;
 
-using mint = modint998244353;
 using mint = modint1000000007;
+using mint = modint998244353;
 using vm = vector<mint>;
 
-constexpr double PI=3.14159265358979323846;
 constexpr int INF = INT_MAX/2;
 constexpr lint LINF = LLONG_MAX/2;
 
@@ -29,6 +28,7 @@ priority_queue<lint, vector<lint>, greater<lint>> q;
 auto l = lower_bound(all(v), key);
 auto u = upper_bound(all(v), key);
 // set型二分探索 O(logN)
+// prevとか使える
 auto l = s.lower_bound(key);
 auto u = s.upper_bound(key);
 
@@ -52,6 +52,7 @@ int idx_u = distance(v.begin(), iter_u);
 cout << fixed << setprecision(10) << N << endl;
 
 // ラジアンー度　変換
+constexpr double PI=3.14159265358979323846;
 #define deg_to_rad(deg) (((deg)/360)*2*PI)
 #define rad_to_deg(rad) (((rad)/2/PI)*360)
 

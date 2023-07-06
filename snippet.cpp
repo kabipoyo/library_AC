@@ -37,6 +37,7 @@ template<class T> inline int binary_search_max(vector<T> &v, T key) {
 }
 
 // 原点からの極座標の角度の大きい順に番号を付ける（0<=Θ<=π/2）
+// 2πまでいけるっぽい　https://yukicoder.me/submissions/881877
 using pint = pair<lint, lint>;
 using vp = vector<pint>;
 map<pint, lint> polar_sort(vp v) {
