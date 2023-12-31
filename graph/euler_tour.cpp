@@ -3,7 +3,10 @@
 vector<int> in;
 vector<int> out;
 int tour = 0;
+set<lint> passed;
 void rec(int root) {
+	if (passed.count(root)) return;
+	passed.insert(root);
 	in[root] = tour;
 	tour++;
 	for (auto n : G[root]) rec(n);
