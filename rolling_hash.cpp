@@ -1,3 +1,4 @@
+// https://ei1333.github.io/luzhiled/snippets/string/rolling-hash.html
 template< unsigned mod >
 struct RollingHash {
 	vector< unsigned > hashed, power;

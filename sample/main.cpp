@@ -37,8 +37,10 @@ s.erase(s.find(x));
 // multiset 所属判定（countは x の要素数に対して線形時間かかる）
 if (s.find(x) != s.end())
 
-// 1の数を数えるっぽい
+// 1の数を数えるっぽい（符号なし整数型じゃないと合わない）
 __builtin_popcount(bit);
+// C++20以降は昇格
+popcount(x);
 
 // 2秒未満でやめる
 int TIME=clock();

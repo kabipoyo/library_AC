@@ -50,6 +50,7 @@ lint bitDP(lint N, lint s, lint t) {
 	return res;
 }
 
+
 // 制約付き数え上げ 貰うbitDP
 // O(N2^N)
 constexpr int INF = INT_MAX/2;
@@ -77,4 +78,26 @@ lint bitDP(int N, lint s) {
 		}
 	}
 	return dp[(1<<N)-1];
+}
+
+
+// 配るbitDP(ウォーク向け)
+vvi dist(20, vi(20, LINF));  // 事前に準備しておく
+lint bitDP(lint N, lint s) {
+	vector<vector<lint>> dp((1<<20), vector<lint>(20, LINF));
+	rep(i, N) dp[1<<i][i] = s;
+	repx(bit, 1, 1<<N) {
+		rep(i, N) {
+			if (~bit >> i & 1) continue;
+			if (dp[bit][i] == LINF) continue;
+			rep(j, N) {
+				if (bit >> j & 1) continue;
+				if (dist[i][j] == LINF) continue;
+				chmin(dp[bit|1<<j][j], dp[bit][i] + dist[i][j]);
+			}
+		}
+	}
+	lint res = LINF;
+	rep(i, N) chmin(res, dp[(1<<N)-1][i]);
+	return res;
 }

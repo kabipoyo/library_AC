@@ -36,8 +36,8 @@ template<class T> inline int binary_search_max(vector<T> &v, T key) {
 	return ok;
 }
 
-// 原点からの極座標の角度の大きい順に番号を付ける（0<=Θ<=π/2）
-// 2πまでいけるっぽい　https://yukicoder.me/submissions/881877
+// 原点からの極座標の角度の「大きい順」に番号を付ける（0<=Θ<=π/2）
+// 2πまでいけるっぽい　https://yukicoder.me/submissions/881877 <- 嘘かも
 using pint = pair<lint, lint>;
 using vp = vector<pint>;
 map<pint, lint> polar_sort(vp v) {
@@ -49,3 +49,12 @@ map<pint, lint> polar_sort(vp v) {
 	for (auto p : v) m[p] = ++a;
 	return m;
 }
+
+// 単位円の[0～2π)までソートする
+sort(all(p), [](auto const& lhs, auto const& rhs) {
+	double d = atan2(lhs.second, lhs.first);
+	if (d < 0) d += PI*2;
+	double e = atan2(rhs.second, rhs.first);
+	if (e < 0) e += PI*2;
+	return d < e;
+});
