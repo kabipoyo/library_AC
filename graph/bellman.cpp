@@ -7,6 +7,9 @@
 	● 負の辺が含まれていても良い
 	● 負の閉路を検出可能
 */
+// 牛ゲーを解く際にも使う
+// https://tjkendev.github.io/procon-library/python/graph/difference-constraints-ushi.html
+// https://ei1333.github.io/luzhiled/snippets/memo/ushi-game.html
 
 using pint = pair<lint, lint>;
 

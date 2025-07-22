@@ -58,3 +58,14 @@ sort(all(p), [](auto const& lhs, auto const& rhs) {
 	if (e < 0) e += PI*2;
 	return d < e;
 });
+
+// 右90°回転
+template<class T> vector<T> rotation_right(int N, vector<T> &v) {
+	vector<T> w(N);
+	rep(i, N) {
+		rep(j, N) {
+			w[i].pb(v[N-1-j][i]);
+		}
+	}
+	return w;
+}
