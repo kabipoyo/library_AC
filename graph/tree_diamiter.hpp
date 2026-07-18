@@ -18,7 +18,7 @@ int bfs(int root) {
 		}
 		if (chmax(b, dist[x])) a = x;
 	}
-	return x;
+	return x;  // a じゃない？
 }
 pair<int, int> tree_diamiter() {
 	int p = bfs(0);

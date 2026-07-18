@@ -69,3 +69,9 @@ template<class T> vector<T> rotation_right(int N, vector<T> &v) {
 	}
 	return w;
 }
+
+// pair second sort
+bool compare_second(pint a, pint b) {
+	if (a.second != b.second) return a.second < b.second;
+	return a.first < b.first;
+}

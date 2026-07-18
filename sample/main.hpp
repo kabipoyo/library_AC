@@ -5,6 +5,7 @@ using pint = pair<lint, lint>;
 using vp = vector<pint>;
 using tint = tuple<lint, lint, lint>;
 using vt = vector<tint>;
+#define rev(i, n) for(lint i=n-1; i>=0; i--)
 
 using mint = modint1000000007;
 using mint = modint998244353;
@@ -42,10 +43,6 @@ __builtin_popcount(bit);
 // C++20以降は昇格
 popcount(x);
 
-// 2秒未満でやめる
-int TIME=clock();
-if (clock()-TIME > 1.98 * CLOCKS_PER_SEC) break;
-
 // インデックスを取得 O(N)
 int idx_l = distance(v.begin(), iter_l);
 int idx_u = distance(v.begin(), iter_u);
@@ -66,6 +63,25 @@ template <typename T, typename... Ts>
 auto make_v(size_t a, Ts... ts) {
 	return vector<decltype(make_v<T>(ts...))>(a, make_v<T>(ts...));
 }
+
+// 2秒未満でやめる
+int TIME=clock();
+if (clock()-TIME > 1.98 * CLOCKS_PER_SEC) break;
+
+// 0からN-1までのベクタ
+vector<int> seq(10);
+iota(all(seq), 0);
+
+// 数列シャッフル
+random_device rd;		// 非決定的な乱数生成器
+mt19937 gen(rd());		// Mersenne Twister エンジン
+// mt19937 gen(12345);	// 固定シードにすれば“再現性”のあるシャッフルに
+shuffle(all(seq), gen);	// シャッフル実行
+
+// ワンチャン速くなる
+#pragma GCC optimize ("O3")
+#pragma GCC optimize ("unroll-loops")
+#pragma GCC target ("avx2")
 
 int main() {
 	int N;

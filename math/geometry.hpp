@@ -27,6 +27,30 @@ lint calc_triangle(Point p1, Point p2, Point p3) {
 	return abs(crs(p3 - p1, p2 - p1));
 }
 
+// ２本の線分に共有点があるか否かを判定する
+lint orientation(Point a, Point b, Point c) {
+	lint cross = (b.px - a.px) * (c.py - a.py) - (b.py - a.py) * (c.px - a.px);
+	if (cross > 0) return 1;
+	if (cross < 0) return -1;
+	return 0;
+}
+bool segments_intersect(Point p1, Point p2, Point q1, Point q2) {
+	if (max(p1.px, p2.px) < min(q1.px, q2.px) ||
+		max(q1.px, q2.px) < min(p1.px, p2.px) ||
+		max(p1.py, p2.py) < min(q1.py, q2.py) ||
+		max(q1.py, q2.py) < min(p1.py, p2.py)) return false;
+	int o1 = orientation(p1, p2, q1);
+	int o2 = orientation(p1, p2, q2);
+	int o3 = orientation(q1, q2, p1);
+	int o4 = orientation(q1, q2, p2);
+	return (o1 * o2 <= 0) and (o3 * o4 <= 0);
+}
+
+// マンハッタン距離の45度回転
+pint rotate_45_degree(lint x, lint y) {
+	return {x-y, x+y};
+}
+
 // 凸包を得る
 vector<Point> get_convex_hull(vector<Point> v) {
 	v.pb({0, 0});
@@ -54,4 +78,15 @@ double get_degree(Point p1, Point p2) {
 	double d = atan2(y, x);
 	if (d < 0) d += PI*2;
 	return rad_to_deg(d);
+}
+
+// 偏角ソート
+bool cmp(const Point &a, const Point &b) {
+	int ah = (a.y < 0 or (a.y == 0 and a.x < 0));
+	int bh = (b.y < 0 or (b.y == 0 and b.x < 0));
+	if (ah != bh) return ah < bh;
+	return crs(a, b) > 0;
+}
+void argument_sort(vector<Point> &points) {
+	sort(points.begin(), points.end(), cmp);
 }

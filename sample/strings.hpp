@@ -12,6 +12,19 @@ int hex2dec(char c) {
 	else return 10+c-'A';
 }
 
+// 文字列の p 文字目を削除してつなげた文字列を返す
+string delete_pos(string S, int p) {
+	S.erase(S.begin() + p);
+	return S;
+}
+
+// 文字列を連結した際の辞書順最小を求めるためのソート
+bool strcomp_concat(const string& s, const string& t) {
+	return (s+t < t+s);
+}
+// vector<string> S(N);
+// sort(all(S), strcomp);
+
 // N進法展開
 long long base_to_long(string N, int base) {
 	long long res = 0;

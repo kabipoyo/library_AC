@@ -17,6 +17,7 @@ void bfs(int root) {
 }
 
 // root からの距離算出
+// G[src][i] = {dst, dist};
 vector<lint> dist;
 void bfs_dist(int root) {
 	lint x, y, z, N = G.size();
