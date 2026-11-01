@@ -1,17 +1,18 @@
 // https://github.com/kabipoyo/library_AC/blob/master/graph/tree_distance.hpp
 // 木専用の距離計算。一般の重み付きグラフの最短路には使わない。
-// G[src][i] = {重み, 行き先};
+// G[src][i] = {行き先, 重み}; 到達不能はLINF。
 vector<lint> dist;
 void bfs_dist(int root) {
 	lint x, y, z, N = G.size();
+	assert(0 <= root && root < N);
 	vector<bool> seen(N); seen[root] = true;
 	queue<int> Q;
-	dist.assign(N, -1);
+	dist.assign(N, LINF);
 	Q.push(root), dist[root] = 0;
 	while (!Q.empty()) {
 		x = Q.front(); Q.pop();
 		rep(i, G[x].size()) {
-			tie(z, y) = G[x][i];
+			tie(y, z) = G[x][i];
 			if (!seen[y]) { seen[y] = true; Q.push(y); dist[y] = dist[x]+z; }
 		}
 	}

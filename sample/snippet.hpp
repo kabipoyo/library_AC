@@ -1,11 +1,11 @@
 // https://github.com/kabipoyo/library_AC/blob/master/sample/snippet.hpp
 // コードの切れ端
 
-// 座標圧縮
+// 座標圧縮。昇順に0から番号を付ける。
 template<class T> map<T, int> coord_comp(set<T> s) {
 	int a = 0;
 	map<T, int> m;
-	for (auto u : s) m[u] = ++a;
+	for (auto u : s) m[u] = a++;
 	return m;
 }
 set<lint> s;
@@ -37,7 +37,7 @@ template<class T> inline int binary_search_max(vector<T> &v, T key) {
 	return ok;
 }
 
-// 偏角 [0, 2pi) の大きい順。原点は末尾。同じ方向は座標順。
+// 偏角 [0, 2pi) の大きい順。順位は0から。原点は末尾。同じ方向は座標順。
 // 座標の絶対値10^9以下。通常の反時計回りソートはmath/geometry.hppも参照。
 map<pint, lint> polar_sort(vp v) {
     sort(all(v), [](const pint& a, const pint& b) {
@@ -52,7 +52,7 @@ map<pint, lint> polar_sort(vp v) {
     });
     map<pint, lint> result;
     lint index = 0;
-    for (auto p : v) result[p] = ++index;
+    for (auto p : v) if (!result.count(p)) result[p] = index++;
     return result;
 }
 

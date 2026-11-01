@@ -2,7 +2,9 @@
 
 // 無向・非負重み。update_distも同じ前提。有限距離はLINF未満。
 vvi dist;
-void Floyd_Warshall(lint N, lint M) {
+// 入力は既定で0-indexed。1-indexed入力なら第3引数に1。
+void Floyd_Warshall(lint N, lint M, int input_base = 0) {
+	assert(N >= 0 && M >= 0 && (input_base == 0 || input_base == 1));
 	dist.assign(N, vi(N, LINF));
 	lint x, y, z;
 	rep(i, N) {
@@ -13,7 +15,8 @@ void Floyd_Warshall(lint N, lint M) {
 	}
 	rep(i, M) {
 		cin >> x >> y >> z;
-		x--, y--;
+		x -= input_base; y -= input_base;
+		assert(0 <= x && x < N && 0 <= y && y < N);
 		chmin(dist[x][y], z);
 		chmin(dist[y][x], z);
 	}

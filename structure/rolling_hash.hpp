@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/structure/rolling_hash.hpp
 /**
  * @brief 文字列の一致判定を高速に行う
  *
@@ -48,18 +49,22 @@ struct RollingHash {
 	}
 
 	unsigned get(int l, int r) const {
+		assert(0 <= l && l <= r && r < hashed.size());
 		unsigned ret = hashed[r] + mod - mul(hashed[l], power[r - l]);
 		if(ret >= mod) ret -= mod;
 		return ret;
 	}
 
 	unsigned connect(unsigned h1, int h2, int h2len) const {
+		assert(0 <= h2len && h2len < power.size());
 		unsigned ret = mul(h1, power[h2len]) + h2;
 		if(ret >= mod) ret -= mod;
 		return ret;
 	}
 
 	int LCP(const RollingHash< mod > &b, int l1, int r1, int l2, int r2) {
+		assert(0 <= l1 && l1 <= r1 && r1 < hashed.size());
+		assert(0 <= l2 && l2 <= r2 && r2 < b.hashed.size());
 		int len = min(r1 - l1, r2 - l2);
 		int low = -1, high = len + 1;
 		while(high - low > 1) {

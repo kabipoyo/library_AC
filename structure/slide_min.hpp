@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/structure/slide_min.hpp
 /**
  * @brief スライド最小値：長さNの数列 a[i] に対して、長さkの連続部分列 {a[i], a[i + 1],... , a[i + k - 1]} の最小値 b[i] を 0 <= i <= n-k を満たすすべての i についてO(N)で計算
  *
@@ -15,6 +16,8 @@
 #pragma once
 #include "base.hpp"
 template< typename T > vector<T> slide_min(const vector<T> &v, int k) {
+	// 最小値に単位元を仮定しないため、空ウィンドウは許可しない。
+	assert(1 <= k && k <= v.size());
 	deque<int> q;
 	vector<T> ret;
 	rep(i, v.size()) {

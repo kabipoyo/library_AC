@@ -6,14 +6,14 @@
 // コンストラクタ．隣接区間をマージする
 SegmentMap map(true);
 
-// iを含む区間[l, r]のstd::map<int,int>::const_iteratorを返す, iを含む区間が無ければmap.end()を返す
+// iを含む区間[l, r)のiteratorを返す。区間が無ければmap.end()。
 // it->first, it->second でアクセス
 auto it = map.get(i);
 
-// 区間[l, r]を挿入する
+// 区間[l, r)を挿入する。空区間は何もしない。
 map.insert(l, r);
 
-// 全区間で[l, r]に重なる部分を全て消す
+// 全区間で[l, r)に重なる部分を全て消す
 map.remove(l, r);
 
 // iとjが同じ区間に属しているかのbool値を返す
@@ -25,48 +25,48 @@ class SegmentMap : public map<lint, lint> {
 private:
 	bool flagToMergeAdjacentSegment;
 public:
-	// if merge [l, c] and [c+1, r], set flagToMergeAdjacentSegment to true
+	// trueなら [l,c) と [c,r) もマージする。
 	SegmentMap(bool flagToMergeAdjacentSegment) :
 		flagToMergeAdjacentSegment(flagToMergeAdjacentSegment) {}
 	// __exist -> iterator pair(l, r) (contain p)
 	// noexist -> map.end()
 	auto get(lint p) const {
 		auto it = upper_bound(p);
-		if (it == begin() || (--it)->second < p) return end();
+		if (it == begin() || (--it)->second <= p) return end();
 		return it;
 	}
-	// insert segment [l, r]
+	// insert segment [l, r)
 	void insert(lint l, lint r) {
 		assert(l <= r);
-		// 隣接判定での +/-1 を安全にするため、端点はlintの両端を除く。
-		assert(l > numeric_limits<lint>::min() && r < numeric_limits<lint>::max());
-		auto itl = upper_bound(l), itr = upper_bound(r + flagToMergeAdjacentSegment);
-		if (itl != begin()) {
-			if ((--itl)->second < l - flagToMergeAdjacentSegment) ++itl;
+		if (l == r) return;
+		auto it = lower_bound(l);
+		if (it != begin()) {
+			auto previous = prev(it);
+			if (flagToMergeAdjacentSegment ? previous->second >= l : previous->second > l) it = previous;
 		}
-		if (itl != itr) {
-			l = min(l, itl->first);
-			r = max(r, prev(itr)->second);
-			erase(itl, itr);
+		while (it != end() && (flagToMergeAdjacentSegment ? it->first <= r : it->first < r)) {
+			l = min(l, it->first);
+			r = max(r, it->second);
+			it = erase(it);
 		}
 		(*this)[l] = r;
 	}
-	// remove segment [l, r]
+	// remove segment [l, r)
 	void remove(lint l, lint r) {
 		assert(l <= r);
-		auto itl = upper_bound(l), itr = upper_bound(r);
-		if (itl != begin()) {
-			if ((--itl)->second < l) ++itl;
+		if (l == r) return;
+		auto it = lower_bound(l);
+		if (it != begin() && prev(it)->second > l) --it;
+		while (it != end() && it->first < r) {
+			lint left = it->first, right = it->second;
+			it = erase(it);
+			if (left < l) (*this)[left] = l;
+			if (r < right) { (*this)[r] = right; break; }
 		}
-		if (itl == itr) return;
-		lint tl = min(l, itl->first), tr = max(r, prev(itr)->second);
-		erase(itl, itr);
-		if (tl < l) (*this)[tl] = l - 1;
-		if (r < tr) (*this)[r + 1] = tr;
 	}
 	// Is p and q in same segment?
 	bool same(lint p, lint q) const {
 		const auto&& it = get(p);
-		return it != end() && it->first <= q && q <= it->second;
+		return it != end() && it->first <= q && q < it->second;
 	}
 };

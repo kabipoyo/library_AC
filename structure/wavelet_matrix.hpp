@@ -17,6 +17,7 @@ struct SuccinctIndexableDictionary {
 	}
 
 	void set(int k) {
+		assert(0 <= k && k < length);
 		bit[k >> 5] |= 1U << (k & 31);
 	}
 
@@ -28,10 +29,12 @@ struct SuccinctIndexableDictionary {
 	}
 
 	bool operator[](int k) {
+		assert(0 <= k && k < length);
 		return (bool((bit[k >> 5] >> (k & 31)) & 1));
 	}
 
 	int rank(int k) {
+		assert(0 <= k && k <= length);
 		return (sum[k >> 5] + __builtin_popcount(bit[k >> 5] & ((1U << (k & 31)) - 1)));
 	}
 
@@ -85,6 +88,7 @@ struct WaveletMatrix {
 
 	// v[k]
 	T access(int k) {
+		assert(0 <= k && k < length);
 		T ret = 0;
 		for(int level = MAXLOG - 1; level >= 0; level--) {
 			bool f = matrix[level][k];
@@ -100,6 +104,7 @@ struct WaveletMatrix {
 
 	// count i s.t. (0 <= i < r) && v[i] == x
 	int rank(const T &x, int r) {
+		assert(0 <= r && r <= length);
 		if (x < 0 || (__uint128_t)x >= (__uint128_t(1) << MAXLOG)) return 0;
 		int l = 0;
 		for(int level = MAXLOG - 1; level >= 0; level--) {
@@ -110,6 +115,7 @@ struct WaveletMatrix {
 
 	// k-th(0-indexed) smallest number in v[l,r)
 	T kth_smallest(int l, int r, int k) {
+		assert(0 <= l && l <= r && r <= length);
 		assert(0 <= k && k < r - l);
 		T ret = 0;
 		for(int level = MAXLOG - 1; level >= 0; level--) {
@@ -126,11 +132,13 @@ struct WaveletMatrix {
 
 	// k-th(0-indexed) largest number in v[l,r)
 	T kth_largest(int l, int r, int k) {
+		assert(0 <= k && k < r - l);
 		return kth_smallest(l, r, r - l - k - 1);
 	}
 
 	// count i s.t. (l <= i < r) && (v[i] < upper)
 	int range_freq(int l, int r, T upper) {
+		assert(0 <= l && l <= r && r <= length);
 		if (upper <= 0) return 0;
 		if ((__uint128_t)upper >= (__uint128_t(1) << MAXLOG)) return r - l;
 		int ret = 0;
@@ -144,19 +152,22 @@ struct WaveletMatrix {
 
 	// count i s.t. (l <= i < r) && (lower <= v[i] < upper)
 	int range_freq(int l, int r, T lower, T upper) {
+		assert(lower <= upper);
 		return range_freq(l, r, upper) - range_freq(l, r, lower);
 	}
 
 	// max v[i] s.t. (l <= i < r) && (v[i] < upper)
-	T prev_value(int l, int r, T upper) {
+	optional<T> prev_value(int l, int r, T upper) {
 		int cnt = range_freq(l, r, upper);
-		return cnt == 0 ? T(-1) : kth_smallest(l, r, cnt - 1);
+		if (cnt == 0) return nullopt;
+		return kth_smallest(l, r, cnt - 1);
 	}
 
 	// min v[i] s.t. (l <= i < r) && (lower <= v[i])
-	T next_value(int l, int r, T lower) {
+	optional<T> next_value(int l, int r, T lower) {
 		int cnt = range_freq(l, r, lower);
-		return cnt == r - l ? T(-1) : kth_smallest(l, r, cnt);
+		if (cnt == r - l) return nullopt;
+		return kth_smallest(l, r, cnt);
 	}
 };
 
@@ -174,8 +185,8 @@ struct WaveletMatrix {
 • kth_smallest(l, r, k): 区間 [l,r) に含まれる要素のうち k 番目(0-indexed) に小さいものを返す.
 • kth_largest(l, r, k): 区間 [l,r) に含まれる要素のうち k 番目 (0-indexed) に大きいものを返す.
 • range_freq(l, r, lower, upper): 区間 [l,r) に含まれる要素のうち [lower,upper) である要素数を返す.
-• prev_value(l, r, upper): 区間 [l,r) に含まれる要素のうち upper の次に小さいものを返す.
-• next_value(l, r, lower): 区間 [l,r) に含まれる要素のうち lower の次に大きいものを返す.
+• prev_value(l, r, upper): 区間 [l,r) の値で upper 未満の最大値をoptional<T>で返す。不在はnullopt.
+• next_value(l, r, lower): 区間 [l,r) の値で lower 以上の最小値をoptional<T>で返す。不在はnullopt.
 
 計算量：
 • 構築: O(NlogV)
@@ -215,6 +226,7 @@ struct CompressedWaveletMatrix {
 	}
 
 	int rank(const T &x, int r) {
+		assert(0 <= r && r <= mat.length);
 		auto pos = get(x);
 		if(pos == ys.size() || ys[pos] != x) return 0;
 		return mat.rank(pos, r);
@@ -233,16 +245,19 @@ struct CompressedWaveletMatrix {
 	}
 
 	int range_freq(int l, int r, T lower, T upper) {
+		assert(lower <= upper);
 		return mat.range_freq(l, r, get(lower), get(upper));
 	}
 
-	T prev_value(int l, int r, T upper) {
+	optional<T> prev_value(int l, int r, T upper) {
 		auto ret = mat.prev_value(l, r, get(upper));
-		return ret == -1 ? T(-1) : ys[ret];
+		if (!ret) return nullopt;
+		return ys[*ret];
 	}
 
-	T next_value(int l, int r, T lower) {
+	optional<T> next_value(int l, int r, T lower) {
 		auto ret = mat.next_value(l, r, get(lower));
-		return ret == -1 ? T(-1) : ys[ret];
+		if (!ret) return nullopt;
+		return ys[*ret];
 	}
 };

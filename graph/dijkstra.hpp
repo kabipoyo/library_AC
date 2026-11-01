@@ -3,12 +3,14 @@
 // 計算量：O(ElogV), E: 辺の数, V: 頂点の数
 // 負の辺があると使用不可
 // make はいずれか片方
+// Gの辺は {行き先, 重み}。
 
 #define mp make_pair
 using pint = pair<lint, lint>;
 
 void dijkstra(lint start, vector<lint> &dist) {
 	lint a=0, b=0, x, y, N = G.size();
+	assert(0 <= start && start < N);
 	dist.assign(N, LINF); dist[start] = 0;
 	priority_queue<pint, vector<pint>, greater<pint>> PQ;
 	PQ.push(make_pair(0, start));
@@ -16,7 +18,7 @@ void dijkstra(lint start, vector<lint> &dist) {
 		tie(x, a) = PQ.top(); PQ.pop();
 		if (dist[a] < x) continue;
 		for (auto p : G[a]) {
-			tie(y, b) = p;
+			tie(b, y) = p;
 			if (chmin(dist[b], x+y)) PQ.push(make_pair(x+y, b));
 		}
 	}
@@ -29,7 +31,7 @@ lint come_back(lint start) {
 	lint x = LINF;
 	swap(G, R);
 	dijkstra(start, re); swap(G, R);
-	for (auto [cost, to] : G[start]) {
+	for (auto [to, cost] : G[start]) {
 		if (re[to] != LINF && cost < LINF - re[to]) chmin(x, cost + re[to]);
 	}
 	return x;
@@ -49,6 +51,7 @@ lint go_to(lint start, lint goal) {
 */
 void dijkstra_list(lint start, vector<lint> &dist, vector<lint> &prev) {
 	lint a=0, b=0, x, y, N = G.size();
+	assert(0 <= start && start < N);
 	dist.assign(N, LINF); dist[start] = 0;
 	prev.assign(N, -1);
 	priority_queue<pint, vector<pint>, greater<pint>> PQ;
@@ -57,7 +60,7 @@ void dijkstra_list(lint start, vector<lint> &dist, vector<lint> &prev) {
 		tie(x, a) = PQ.top(); PQ.pop();
 		if (dist[a] < x) continue;
 		for (auto p : G[a]) {
-			tie(y, b) = p;
+			tie(b, y) = p;
 			if (chmin(dist[b], x+y)) {
 				prev[b] = a;
 				PQ.push(make_pair(x+y, b));
@@ -65,17 +68,22 @@ void dijkstra_list(lint start, vector<lint> &dist, vector<lint> &prev) {
 		}
 	}
 }
-/* get_path(prev, t)
+/* get_path(prev, start, t)
 	入力：dijkstra で得た prev, ゴール t
 	出力： t への最短路のパス
-	最短経路がない場合は事前に場合分けをすること
+	到達不能は空配列。始点自身への経路は{start}。
 */
-vector<lint> get_path(vector<lint> &prev, lint t) {
+vector<lint> get_path(const vector<lint> &prev, lint start, lint t) {
+	assert(0 <= start && start < prev.size() && 0 <= t && t < prev.size());
 	vector<lint> path;
 	for (lint cur = t; cur != -1; cur = prev[cur]) {
+		assert(0 <= cur && cur < prev.size());
 		path.push_back(cur);
+		if (cur == start) {
+			reverse(path.begin(), path.end());
+			return path;
+		}
 	}
-	reverse(path.begin(), path.end()); // 逆順なのでひっくり返す
-	return path;
+	return {};
 }
 

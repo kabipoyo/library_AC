@@ -14,18 +14,22 @@
 
 using pint = pair<lint, lint>;
 
+// Gの辺は {行き先, 重み}。入力は既定で0-indexed。
 vector<vector<pair<lint, lint>>> G;
-void make_dist_graph(int N, int M) {
+void make_dist_graph(int N, int M, int input_base = 0) {
+	assert(N >= 0 && M >= 0 && (input_base == 0 || input_base == 1));
 	lint x, y, z;
 	G.assign(N, {});
 	rep(i, M) {
 		cin >> x >> y >> z;
-		x--, y--;
-		G[x].push_back(make_pair(z, y));
+		x -= input_base; y -= input_base;
+		assert(0 <= x && x < N && 0 <= y && y < N);
+		G[x].push_back(make_pair(y, z));
 	}
 }
 
 bool bellman_ford(int N, int s, vector<lint> &dis) {
+	assert(N == G.size() && 0 <= s && s < N);
 	dis.assign(N, LINF);
 	dis[s] = 0;
 	lint c, x, z;
@@ -34,7 +38,7 @@ bool bellman_ford(int N, int s, vector<lint> &dis) {
 		rep(i, N) {
 			if (dis[i] == LINF) continue;
 			for (auto e : G[i]) {
-				tie(z, x) = e;
+				tie(x, z) = e;
 				if (chmin(dis[x], dis[i]+z)) end = false;
 			}
 		}
@@ -45,13 +49,14 @@ bool bellman_ford(int N, int s, vector<lint> &dis) {
 
 // ベルマンフォード後、ゴールまでの経路に負の閉路が存在するか判定
 bool check_close(int N, int g, vector<lint> &dis) {
+	assert(N == G.size() && dis.size() == N && 0 <= g && g < N);
 	vector<bool> v(N);
 	lint x, z;
 	rep(t, N) {
 		rep(i, N) {
 			if (dis[i] == LINF) continue;
 			for (auto e : G[i]) {
-				tie(z, x) = e;
+				tie(x, z) = e;
 				if (chmin(dis[x], dis[i]+z)) v[x] = true;
 				if (v[i]) v[x] = true;
 			}
