@@ -1,11 +1,5 @@
 // https://github.com/kabipoyo/library_AC/blob/master/graph/kruskal.hpp
-/* Kruskal :クラスカル法で minimum spanning tree (最小全域木) を求める
-	コストの和が最小になるように木を構築する
-	入力: 辺のvector, 頂点数V
-	最小全域木の重みの総和: res
-	計算量: O(|E|log|E|)
-*/
-
+// 最小全域木（非連結なら森）の重み。頂点は0-indexed。
 template<typename T> struct edge {
 	int from, to;
 	T cost;

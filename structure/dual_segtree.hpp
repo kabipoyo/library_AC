@@ -1,13 +1,7 @@
 // https://github.com/kabipoyo/library_AC/blob/master/structure/dual_segtree.hpp
-/**
- * @brief 詳細に記載の問題用に改造された版、セグ木を改造して使いたいときに
- * @param N セグ木のサイズ
- * @return セグ木クラス
- * @details 例題：https://atcoder.jp/contests/abc342/tasks/abc342_g
- *
- * 使い方：
-dual_segtree seg(N);
- */
+// 区間[l,r)に候補を追加・取消。getは候補なしならnullopt。
+// time>0で追加、-timeで取消。ABC342 G用の改造版。
+// 問題例: https://atcoder.jp/contests/abc342/tasks/abc342_g
 #pragma once
 #include "base.hpp"
 class dual_segtree{

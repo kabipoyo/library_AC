@@ -1,11 +1,8 @@
 // https://github.com/kabipoyo/library_AC/blob/master/graph/tree_dp.hpp
-/* Rerooting: 全方位木 DP
-	dpall[i][j]：ノードiのjから先にあるノード数を数える
-	計算量: O(N log N)
-*/
+// dpall[v][to]は、vから隣接頂点toへ進む側の頂点数。
 vi dp;
 vector<map<lint, lint>> dpall;
-// Gは連結な無向木。mapへの格納を含め O(N log N)。
+// Gは連結な無向木。
 void Rerooting() {
     int N = G.size(); dp.assign(N, 0); dpall.assign(N, {});
     if (N == 0) return;

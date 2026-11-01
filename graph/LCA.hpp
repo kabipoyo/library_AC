@@ -1,8 +1,5 @@
 // https://github.com/kabipoyo/library_AC/blob/master/graph/LCA.hpp
-/* LCA(root): 木 G に対する根を root として Lowest Common Ancestor を求める構造体
-	query(u,v): u と v の LCA を求める。計算量 O(logn)
-	前処理: O(nlogn)時間, O(nlogn)空間
-*/
+// 連結な無向木Gの最小共通祖先。頂点・rootは0-indexed。
 struct LCA {
 	vector<vector<int>> parent;  // parent[k][u]:= u の 2^k 先の親
 	vector<int> dist;			// root からの距離

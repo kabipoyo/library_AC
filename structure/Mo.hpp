@@ -1,21 +1,6 @@
 // https://github.com/kabipoyo/library_AC/blob/master/structure/Mo.hpp
-/**
- * @brief Mo's Algorithm：Q個のクエリに対してO(N√Q)でソートする（ソート関数のルールに入れる）
- *
- * @details 以下の条件を満たすと適用できる
- * 1. 配列の要素が不変
- * 2. クエリを先読みできる
- * 3. 区間[l, r)の結果から、区間[l±1, r)や[l, r±1)の結果を容易に計算できる
- *
- * 区間状のクエリをソートできる
- * https://ei1333.hateblo.jp/entry/2017/09/11/211011
- *
- * 計算量：O(N√Q)
- *
- * 使い方：
-M = max((lint)1, N/max((lint)sqrt(Q), (lint)1));
-sort(all(p), mo_tuple_less); // pairの場合はmo_pair_less
- */
+// 区間[l,r)のオフラインクエリ用比較。ブロック幅Mは1以上。
+// 参考: https://ei1333.hateblo.jp/entry/2017/09/11/211011
 #pragma once
 #include "base.hpp"
 int M = 1;  // 分割する区間サイズ。必ず1以上。

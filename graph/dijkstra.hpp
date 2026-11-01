@@ -1,10 +1,5 @@
 // https://github.com/kabipoyo/library_AC/blob/master/graph/dijkstra.hpp
-// 単一始点最短経路問題
-// 計算量：O(ElogV), E: 辺の数, V: 頂点の数
-// 負の辺があると使用不可
-// make はいずれか片方
-// Gの辺は {行き先, 重み}。
-
+// 非負重み。Gの辺は{行き先,重み}、距離の到達不能はLINF。
 #define mp make_pair
 using pint = pair<lint, lint>;
 
@@ -44,11 +39,7 @@ lint go_to(lint start, lint goal) {
 	return v[goal];
 }
 
-/* 経路復元 dijkstra(G,s,dis,prev)
-	入力：グラフ G, 開始点 s, 距離を格納する dis, 最短経路の前の点を記録するprev
-	計算量：O(|E|log|V|)
-	副作用：dis, prevが書き換えられる
-*/
+// distとprevを上書き。prevは直前頂点、始点・到達不能では-1。
 void dijkstra_list(lint start, vector<lint> &dist, vector<lint> &prev) {
 	lint a=0, b=0, x, y, N = G.size();
 	assert(0 <= start && start < N);
@@ -68,11 +59,7 @@ void dijkstra_list(lint start, vector<lint> &dist, vector<lint> &prev) {
 		}
 	}
 }
-/* get_path(prev, start, t)
-	入力：dijkstra で得た prev, ゴール t
-	出力： t への最短路のパス
-	到達不能は空配列。始点自身への経路は{start}。
-*/
+// 到達不能は空配列、始点自身へは{start}。
 vector<lint> get_path(const vector<lint> &prev, lint start, lint t) {
 	assert(0 <= start && start < prev.size() && 0 <= t && t < prev.size());
 	vector<lint> path;

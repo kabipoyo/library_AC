@@ -1,7 +1,5 @@
 // https://github.com/kabipoyo/library_AC/blob/master/graph/tree_diameter.hpp
-/* tree_diameter : bfs を用いて木の直径を求める
-	計算量: O(N)
-*/
+// 連結な無向・重みなし木の直径の両端。空のGでは{-1,-1}。
 #define mp make_pair
 using pint = pair<int, int>;
 vector<int> dist;

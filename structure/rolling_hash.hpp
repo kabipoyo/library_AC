@@ -1,30 +1,6 @@
 // https://github.com/kabipoyo/library_AC/blob/master/structure/rolling_hash.hpp
-/**
- * @brief 文字列の一致判定を高速に行う
- *
- * @tparam mod 1000000007などを入れる
- * @author ei1333
- * @details https://ei1333.github.io/luzhiled/snippets/string/rolling-hash.html
- *
- * 使い方：
- * using RH = RollingHash< 1000000007 >;
- * RH rh(S);
- *
- * get：区間[l, r)のハッシュ値を得る
- * x = rh.get(l, r);
- *
- * connect：ハッシュ値 h1, 長さ h2len のハッシュ値 h2 を結合する
- * x = rh.connect(h1, h2, len);
- *
- * LCP：区間[l1, r1)とハッシュテーブルが b の区間[l2, r2)の最長共通接頭辞の長さを求める
- * x = rh.LCP(rhb, l1, r1, l2, r2);
- *
- * 計算量：
- * 構築		O(N)
- * get		O(1)
- * connect	O(1)
- * LCP		O(logN)
- */
+// 区間[l,r)。同じmod/baseで比較する確率的な一致判定。GCC/x86用。
+// 出典: ei1333 https://ei1333.github.io/luzhiled/snippets/string/rolling-hash.html
 template< unsigned mod >
 struct RollingHash {
 	vector< unsigned > hashed, power;

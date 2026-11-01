@@ -3,18 +3,13 @@
 #include <bits/stdc++.h>
 #include <atcoder/all>
 
-// 競プロ用・簡易確率／期待値ユーティリティ集
-// double でも atcoder::modint 系でも同じコードで使えるように
-// テンプレート化してあります（T は +,-,*,/ が定義されている型）。
-// 必要に応じて namespace prob 直下へ追加してください。
+// 確率・期待値。Tはdoubleやmodintなど、必要な四則演算ができる型。
 
 namespace prob {
 using namespace std;
 using namespace atcoder;
 
-//----------------------------------------
 // 内部ヘルパ―：1 と 0 の型依存定義
-//----------------------------------------
 
 template<class T> inline T _one() { return T(1); }
 template<> inline double _one<double>() { return 1.0; }
@@ -22,9 +17,7 @@ template<> inline double _one<double>() { return 1.0; }
 template<class T> inline T _zero() { return T(0); }
 template<> inline double _zero<double>() { return 0.0; }
 
-//----------------------------------------
 // 汎用累乗 (log exp)
-//----------------------------------------
 
 template<class T>
 T ipow(T base, long long exp) {
@@ -38,9 +31,7 @@ T ipow(T base, long long exp) {
 	return res;
 }
 
-//----------------------------------------
 // 幾何分布／負の二項分布
-//----------------------------------------
 
 // 期待試行回数：初成功まで (Geom, E[X] = 1/p)
 template<class T>
@@ -61,9 +52,7 @@ T negbin_exp(long long k, T p) {
 	return T(k) / p;
 }
 
-//----------------------------------------
 // 組合せ (nCk) 前計算クラス
-//----------------------------------------
 
 template<class T>
 struct Comb {
@@ -89,9 +78,7 @@ struct Comb {
 	}
 };
 
-//----------------------------------------
 // 分布関係関数
-//----------------------------------------
 
 // Binomial PMF: P(X=k)
 template<class T>
@@ -115,9 +102,7 @@ T hypergeom_pmf(int N, int K, int n, int k, const Comb<T>& C) {
 	return C(K, k) * C(N - K, n - k) / C(N, n);
 }
 
-//----------------------------------------
 // クーポンコレクター期待値 (全部集めるまで)
-//----------------------------------------
 
 template<class T>
 T coupon_exp(int n) {
@@ -126,9 +111,7 @@ T coupon_exp(int n) {
 	return res * T(n);
 }
 
-//----------------------------------------
 // 任意確率ベクトルで「初ヒット」期待回数  (多項幾何)
-//----------------------------------------
 // probs はヒット確率の配列（和は <=1）。残りは "ミス" として扱う。
 // 戻り値: 期待手数 (失敗確率 <1 であることが前提)
 

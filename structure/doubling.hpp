@@ -1,21 +1,6 @@
 // https://github.com/kabipoyo/library_AC/blob/master/structure/doubling.hpp
-/**
- * @brief 各状態から指定回数だけ遷移した先を求める
- *
- * @tparam sz Nを入れる
- * @tparam lim_t 最大何状態先まで計算するかを入れる
- * @author ei1333
- * @details https://ei1333.github.io/luzhiled/snippets/memo/doubling.html
- *
- * 使い方：
- * Doubling doubling(sz, lim_t);
- *
- * query(k, t): k の t 状態先を求める
- *
- * 計算量：
- * build	O(N log(lim_t+1))
- * query	O(log(lim_t+1))
- */
+// 状態は0-indexed。遷移先なしは-1、問い合わせ回数tは非負。
+// 出典: ei1333 https://ei1333.github.io/luzhiled/snippets/memo/doubling.html
 #pragma once
 #include "base.hpp"
 

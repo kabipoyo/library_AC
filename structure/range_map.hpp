@@ -1,24 +1,6 @@
 // https://github.com/kabipoyo/library_AC/blob/master/structure/range_map.hpp
-/**
- * @brief 区間を管理する
- * @details
- *
-// コンストラクタ．隣接区間をマージする
-SegmentMap map(true);
-
-// iを含む区間[l, r)のiteratorを返す。区間が無ければmap.end()。
-// it->first, it->second でアクセス
-auto it = map.get(i);
-
-// 区間[l, r)を挿入する。空区間は何もしない。
-map.insert(l, r);
-
-// 全区間で[l, r)に重なる部分を全て消す
-map.remove(l, r);
-
-// iとjが同じ区間に属しているかのbool値を返す
-bool f = map.same(i, j);
- */
+// 整数の半開区間[l,r)を管理。空区間の更新は何もしない。
+// getは不在時end()。コンストラクタのtrueは隣接区間も結合。
 #pragma once
 #include "base.hpp"
 class SegmentMap : public map<lint, lint> {

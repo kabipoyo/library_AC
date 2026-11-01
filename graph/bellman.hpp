@@ -1,13 +1,5 @@
 // https://github.com/kabipoyo/library_AC/blob/master/graph/bellman.hpp
-/* bellman_ford(V, s, dis)
-	単一始点最短経路問題（全ての頂点に対して）を解く
-	入力: 全ての辺Es, 頂点数V, 開始点 s, 最短経路を記録するdis
-	出力: 負の閉路が存在するなら ture
-	計算量：O(|E||V|)
-	副作用：dis が書き換えられる
-	● 負の辺が含まれていても良い
-	● 負の閉路を検出可能
-*/
+// 負辺対応。bellman_fordは始点から到達する負閉路があればtrue。距離disを上書き。
 // 牛ゲーを解く際にも使う
 // https://tjkendev.github.io/procon-library/python/graph/difference-constraints-ushi.html
 // https://ei1333.github.io/luzhiled/snippets/memo/ushi-game.html

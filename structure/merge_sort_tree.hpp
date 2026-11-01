@@ -1,22 +1,5 @@
 // https://github.com/kabipoyo/library_AC/blob/master/structure/merge_sort_tree.hpp
-/**
- * @brief merge_sort_tree：セグ木のように、各区間についてソートされた配列を持つデータ構造
- *
- * @param idx 呼ぶときは0
- * @param ss 呼ぶときは0
- * @param se 呼ぶときはN（半開区間[ss,se)）
- * @param a 事前に作ったデータ列
- * @param sTree 事前に作った木構造
- * @details Constructs a segment tree and stores sTree[]
- *
- * 使い方：
-vi v(N);
-vin(v);
-vi A[N];
-rep(i, N) A[i].pb(v[i]);
-vi T[MAX];
-buildTree(0, 0, N, A, T);
- */
+// 構築・問い合わせとも[l,r)。queryはk以下の個数を返す。空区間は0。
 #pragma once
 #include "base.hpp"
 const int MAX = 262144;
@@ -46,12 +29,6 @@ void buildTree(int idx, int ss, int se, vi a[], vi sTree[]) {
 		  back_inserter(sTree[idx]));
 }
 
-/**
- * @brief merge_sort_tree 用の再起関数
- * @details
- * Recursive function to count smaller elements from row
- * a[ss] to a[se-1] and value smaller than or equal to k.
- */
 lint queryRec(int node, int start, int end, int ss, int se, int k, vi a[], vi sTree[]) {
 	/* If out of range return 0 */
 	if (ss >= end || start >= se || ss == se)
@@ -60,7 +37,7 @@ lint queryRec(int node, int start, int end, int ss, int se, int k, vi a[], vi sT
 	/* if inside the range return count */
 	if (ss <= start && se >= end) {
 		/* binary search over the sorted vector
-		to return count >= X */
+		to return count <= k */
 		return upper_bound(sTree[node].begin(), sTree[node].end(), k) - sTree[node].begin();
 	}
 
@@ -76,20 +53,6 @@ lint queryRec(int node, int start, int end, int ss, int se, int k, vi a[], vi sT
 	return p1 + p2;
 }
 
-/**
- * @brief 指定した区間内で、k以下の要素数を返すクエリ
- *
- * @param start 区間の開始
- * @param end 区間の右端（含まない）
- * @param k いくつ以下を数えたいか
- * @param a 作ったデータ列
- * @param n N
- * @param sTree 作った木
- * @return lint 指定した区間内で、k以下の要素数
- * @details
- * 使い方：
- * query(0, N, k, A, N, T);
- */
 lint query(int start, int end, int k, vi a[], int n, vi sTree[]) {
 	assert(0 <= start && start <= end && end <= n);
 	if (start == end) return 0;

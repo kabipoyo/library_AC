@@ -1,7 +1,5 @@
-/* topo_sort(G): グラフG をトポロジカルソート
-	返り値: トポロジカルソートされた頂点番号
-	計算量: O(|E|+|V|)
-*/
+// https://github.com/kabipoyo/library_AC/blob/master/graph/topo_sort.hpp
+// Gは有向・重みなし。閉路があると結果は全頂点を含まない。
 vi topo_sort() {
 	vi res;
 	lint N = G.size();

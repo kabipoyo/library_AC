@@ -1,9 +1,9 @@
 // https://github.com/kabipoyo/library_AC/blob/master/structure/wavelet_matrix.hpp
+// 静的配列の区間[l,r)、順位kは0-indexed。prev/nextの不在はnullopt。
+// 出典: ei1333 https://ei1333.github.io/library/structure/wavelet/wavelet-matrix.hpp.html
 #pragma once
 #include "base.hpp"
-/**
- * @brief wavelet matrix 用
- */
+// Wavelet Matrix内部のビット列。rank(k)は[0,k)の個数。
 struct SuccinctIndexableDictionary {
 	size_t length;
 	size_t blocks;
@@ -43,13 +43,7 @@ struct SuccinctIndexableDictionary {
 	}
 };
 
-/**
- * @brief WaveletMatrix：配列に対していろいろなクエリがO(logV)でできる
- *
- * @tparam T 配列の型、lintで良い
- * @tparam MAXLOG 値を表すビット数。値域は [0, 2^MAXLOG)。
- * @details 後述のを使えばよい
- */
+// 非圧縮版の値域は[0,2^MAXLOG)。
 template< typename T, int MAXLOG >
 struct WaveletMatrix {
 	static_assert(0 < MAXLOG && MAXLOG <= numeric_limits<T>::digits);
@@ -171,35 +165,7 @@ struct WaveletMatrix {
 	}
 };
 
-/**
- * @brief WaveletMatrix：配列に対していろいろなクエリがO(logV)でできる
- *
- * @tparam T 配列の型、lintで良い
- * @tparam MAXLOG 圧縮後の値を表すビット数。異なる値の数 <= 2^MAXLOG。
- * @see SuccinctIndexableDictionary
- * @details
-使い方：
-• WaveletMatrix(v): 各要素の高さ v を初期値として構築する.
-• access(k): k 番目の要素を返す.
-• rank(x, r): 区間 [0,r) に含まれる x の個数を返す.
-• kth_smallest(l, r, k): 区間 [l,r) に含まれる要素のうち k 番目(0-indexed) に小さいものを返す.
-• kth_largest(l, r, k): 区間 [l,r) に含まれる要素のうち k 番目 (0-indexed) に大きいものを返す.
-• range_freq(l, r, lower, upper): 区間 [l,r) に含まれる要素のうち [lower,upper) である要素数を返す.
-• prev_value(l, r, upper): 区間 [l,r) の値で upper 未満の最大値をoptional<T>で返す。不在はnullopt.
-• next_value(l, r, lower): 区間 [l,r) の値で lower 以上の最小値をoptional<T>で返す。不在はnullopt.
-
-計算量：
-• 構築: O(NlogV)
-• クエリ: O(logV)
-V は値の最大値.
-
-構築：
-vector< int > A(N);
-CompressedWaveletMatrix< int, 18 > mat(A);
-
-基本的には事前に要素の値を要素数に圧縮する CompressedWaveletMatrix を用いると高速に動作する.
-https://ei1333.github.io/library/structure/wavelet/wavelet-matrix.hpp.html
- */
+// 圧縮版：異なる値の数 <= 2^MAXLOG。
 template< typename T, int MAXLOG >
 struct CompressedWaveletMatrix {
 	WaveletMatrix< int, MAXLOG > mat;
