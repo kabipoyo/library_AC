@@ -1,0 +1,31 @@
+# Public repository: submission snippets only.
+# Everything is local-only unless explicitly allowed below.
+# Includes README, docs, Doxyfile, tests, search tools, build outputs and backups.
+/*
+
+!/.gitignore
+!/base.hpp
+
+!/graph/
+/graph/*
+!/graph/*.hpp
+
+!/math/
+/math/*
+!/math/*.hpp
+
+!/sample/
+/sample/*
+!/sample/*.hpp
+
+!/string/
+/string/*
+!/string/*.hpp
+
+!/structure/
+/structure/*
+!/structure/*.hpp
+
+# New genres, nested directories and other source extensions require an explicit
+# allow rule. Do not put private tools or notes in the public .hpp files.
+# Ignore rules do not hide already tracked files or remove public Git history.
