@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/graph/make_weighted_graph.hpp
 // 重み付きグラフ。辺は {重み, 行き先}、入力は1-indexed。
 // make_graph.hpp、bellman.hppのグラフ宣言・生成とは同時にコピーしない。
 vector<vector<pair<lint, lint>>> G, R;

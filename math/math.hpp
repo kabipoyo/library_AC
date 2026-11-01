@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/math/math.hpp
 lint gcd(lint a, lint b) { return b?gcd(b,a%b):a; }  // 最大公約数
 lint lcm(lint a, lint b) { return a == 0 || b == 0 ? 0 : a/gcd(a,b)*b; } // 最小公倍数（結果はlint内）
 

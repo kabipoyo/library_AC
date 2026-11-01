@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/structure/range_map.hpp
 /**
  * @brief 区間を管理する
  * @details

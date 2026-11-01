@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/graph/bitDP_fixed_start.hpp
 // 始点（start）ありver
 lint node, start, init;
 vvi dist(18, vi(18, LINF));  // 事前に準備しておく

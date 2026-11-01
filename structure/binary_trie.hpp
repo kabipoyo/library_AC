@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/structure/binary_trie.hpp
 /**
  * @brief 整数をビット列とみなして, トライ木のように持つデータ構造.
  *

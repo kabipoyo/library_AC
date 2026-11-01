@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/math/binomial.hpp
 // C(60, 30) ぐらいまでなら収まる
 lint binomial(int n, int k) {
 	if (k < 0 || k > n) return 0;

@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/string/strings.hpp
 // 10進法での各桁の和を求める
 int sum_digits(lint N) {
 	string s = to_string(N);

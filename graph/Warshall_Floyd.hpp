@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/graph/Warshall_Floyd.hpp
 
 // 無向・非負重み。update_distも同じ前提。有限距離はLINF未満。
 vvi dist;

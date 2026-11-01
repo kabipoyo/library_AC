@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/structure/binary_trie_lazy.hpp
 // 全体XORとmex用の別版。通常版はbinary_trie.hpp。
 // MAX_LOGは最上位ビット位置。非負整数、mexは重複なしの集合で使う。
 // BinaryTrie

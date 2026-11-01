@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/graph/tree_diameter.hpp
 /* tree_diameter : bfs を用いて木の直径を求める
 	計算量: O(N)
 */

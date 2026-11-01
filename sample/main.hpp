@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/sample/main.hpp
 // base.hppの共通定義をコピーした後に、必要な使用例だけを選ぶ。
 // mintの法はbase.hpp側で選択する。
 

@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/graph/bitDP_iterative.hpp
 // 配るbitDP(ウォーク向け)
 vvi dist(20, vi(20, LINF));  // 事前に準備しておく
 lint bitDP(lint N, lint s) {

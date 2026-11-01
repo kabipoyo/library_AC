@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/math/matrix.hpp
 // 行列累乗
 // 行列 A^k を O(A^3logk) で求める
 // base.hppのmintとvmを使用（必要なら法を変更）。

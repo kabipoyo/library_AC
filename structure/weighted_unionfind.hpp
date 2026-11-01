@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/structure/weighted_unionfind.hpp
 // 重み付きUnionFind。merge(x, y, z): potential[y] - potential[x] = z。
 // 矛盾する制約はfalse。sizeは連結成分の要素数。lintが必要。
 // 経路圧縮 + union by size。各操作は償却 O(alpha(N))。

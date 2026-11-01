@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/graph/bitDP.hpp
 // 巡回セールスマン問題 メモ化再帰bitDP
 lint node, start;
 vvi dist(18, vi(18));  // 事前に準備しておく

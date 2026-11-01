@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/structure/trie.hpp
 // https://ei1333.github.io/algorithm/trie.html
 // Trie
 // Trie<256, 0> T;

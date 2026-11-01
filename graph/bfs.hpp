@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/graph/bfs.hpp
 
 // root からの距離算出
 // 根付き木生成のための深さ探索など

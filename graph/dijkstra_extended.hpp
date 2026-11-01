@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/graph/dijkstra_extended.hpp
 // 拡張ダイクストラ（状態１：最短経路、状態２：最大化したい変数）
 using ppint = pair<pint, lint>;
 // Gは {加算する値, 行き先}。距離は辺数、同距離なら加算値を最大化。

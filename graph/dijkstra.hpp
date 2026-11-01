@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/graph/dijkstra.hpp
 // 単一始点最短経路問題
 // 計算量：O(ElogV), E: 辺の数, V: 頂点の数
 // 負の辺があると使用不可

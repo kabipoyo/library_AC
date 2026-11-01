@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/math/prime.hpp
 // エラトステネスの篩
 
 // Sieve S(N);

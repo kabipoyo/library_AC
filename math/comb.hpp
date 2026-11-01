@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/math/comb.hpp
 // ACL mint 対応版
 struct combination {
 	vector<mint> fact, ifact;

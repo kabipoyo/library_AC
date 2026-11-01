@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/graph/LCA.hpp
 /* LCA(root): 木 G に対する根を root として Lowest Common Ancestor を求める構造体
 	query(u,v): u と v の LCA を求める。計算量 O(logn)
 	前処理: O(nlogn)時間, O(nlogn)空間

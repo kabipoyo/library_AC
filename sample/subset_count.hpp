@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/sample/subset_count.hpp
 // ABC349 F向け応用。先にmath/subset_transform.hppをコピーする。
 // https://atcoder.jp/contests/abc349/tasks/abc349_f
 vm zeta_mobius(vi &v, int s) {

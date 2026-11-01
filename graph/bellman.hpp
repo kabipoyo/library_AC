@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/graph/bellman.hpp
 /* bellman_ford(V, s, dis)
 	単一始点最短経路問題（全ての頂点に対して）を解く
 	入力: 全ての辺Es, 頂点数V, 開始点 s, 最短経路を記録するdis

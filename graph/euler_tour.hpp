@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/graph/euler_tour.hpp
 // オイラーツアー
 // 各ノードについて部分木を抽出する
 vector<int> in;

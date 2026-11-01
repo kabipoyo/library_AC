@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/structure/doubling.hpp
 /**
  * @brief 各状態から指定回数だけ遷移した先を求める
  *

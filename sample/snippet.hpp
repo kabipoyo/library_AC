@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/sample/snippet.hpp
 // コードの切れ端
 
 // 座標圧縮

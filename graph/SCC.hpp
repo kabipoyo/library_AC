@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/graph/SCC.hpp
 // 強連結成分分解（SCC）
 // 有向グラフをループ毎に分解する
 // O(N+M)

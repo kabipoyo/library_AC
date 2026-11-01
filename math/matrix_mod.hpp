@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/math/matrix_mod.hpp
 // mod を指定するタイプ
 vvi matrix_mul(vvi A, vvi B, lint M) {
 	assert(M >= 1 && !A.empty() && !B.empty() && A[0].size() == B.size());

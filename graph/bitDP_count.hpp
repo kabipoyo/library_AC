@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/graph/bitDP_count.hpp
 // 制約付き数え上げ 貰うbitDP
 // O(N2^N)
 int node, start;

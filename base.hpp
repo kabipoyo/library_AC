@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/base.hpp
 #pragma once
 #include <bits/stdc++.h>
 #include <atcoder/all>

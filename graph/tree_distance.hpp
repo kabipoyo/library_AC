@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/graph/tree_distance.hpp
 // 木専用の距離計算。一般の重み付きグラフの最短路には使わない。
 // G[src][i] = {重み, 行き先};
 vector<lint> dist;

@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/structure/Mo.hpp
 /**
  * @brief Mo's Algorithm：Q個のクエリに対してO(N√Q)でソートする（ソート関数のルールに入れる）
  *

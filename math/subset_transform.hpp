@@ -1,3 +1,4 @@
+// https://github.com/kabipoyo/library_AC/blob/master/math/subset_transform.hpp
 // ゼータ・メビウス変換
 template<class T> void zeta_transform(vector<T> &v, int s) {
 	assert(0 <= s && s < 31 && v.size() == (size_t(1) << s));
