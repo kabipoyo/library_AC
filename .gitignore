@@ -26,6 +26,10 @@
 /structure/*
 !/structure/*.hpp
 
+!/acl/
+/acl/*
+!/acl/*.hpp
+
 # New genres, nested directories and other source extensions require an explicit
 # allow rule. Do not put private tools or notes in the public .hpp files.
 # Ignore rules do not hide already tracked files or remove public Git history.
