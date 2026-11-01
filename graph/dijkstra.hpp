@@ -3,13 +3,12 @@
 // 負の辺があると使用不可
 // make はいずれか片方
 
-constexpr lint LINF = LLONG_MAX/2;
 #define mp make_pair
 using pint = pair<lint, lint>;
 
 void dijkstra(lint start, vector<lint> &dist) {
 	lint a=0, b=0, x, y, N = G.size();
-	dist.resize(N, LINF); dist[start] = 0;
+	dist.assign(N, LINF); dist[start] = 0;
 	priority_queue<pint, vector<pint>, greater<pint>> PQ;
 	PQ.push(make_pair(0, start));
 	while (!PQ.empty()) {
@@ -22,13 +21,16 @@ void dijkstra(lint start, vector<lint> &dist) {
 	}
 }
 
-// start から start までの最短距離
+// startに戻る非空の最短閉路。Gの逆向きグラフRが必要。重みは非負。
+// 存在しなければLINF。自己ループと重み0の辺も対象。
 lint come_back(lint start) {
-	vector<lint> go, re;
+	vector<lint> re;
 	lint x = LINF;
-	dijkstra(start, go); swap(G, R);
+	swap(G, R);
 	dijkstra(start, re); swap(G, R);
-	rep(i, go.size()) if (go[i] && re[i]) chmin(x, go[i]+re[i]);
+	for (auto [cost, to] : G[start]) {
+		if (re[to] != LINF && cost < LINF - re[to]) chmin(x, cost + re[to]);
+	}
 	return x;
 }
 
@@ -46,8 +48,8 @@ lint go_to(lint start, lint goal) {
 */
 void dijkstra_list(lint start, vector<lint> &dist, vector<lint> &prev) {
 	lint a=0, b=0, x, y, N = G.size();
-	dist.resize(N, LINF); dist[start] = 0;
-	prev.resize(N, -1);
+	dist.assign(N, LINF); dist[start] = 0;
+	prev.assign(N, -1);
 	priority_queue<pint, vector<pint>, greater<pint>> PQ;
 	PQ.push(make_pair(0, start));
 	while (!PQ.empty()) {
@@ -76,28 +78,3 @@ vector<lint> get_path(vector<lint> &prev, lint t) {
 	return path;
 }
 
-// 拡張ダイクストラ（状態１：最短経路、状態２：最大化したい変数）
-using pint = pair<lint, lint>;
-using ppint = pair<pint, lint>;
-using vp = vector<pint>;
-vector<vector<pair<lint, lint>>> G;
-
-void dijkstra(lint start, vector<pint> &dist) {
-	lint N = G.size();
-	lint a=0, b=0, c=0, x, y, z;
-	pint p;
-	dist.resize(N, {LINF, 0}); dist[start] = {0, 0};
-	priority_queue<ppint, vector<ppint>, greater<ppint>> PQ;
-	PQ.push(make_pair(make_pair(0, 0), start));
-	while (!PQ.empty()) {
-		tie(p, a) = PQ.top(); PQ.pop();
-		tie(x, z) = p;
-		if (dist[a].first < x) continue;
-		if (dist[a].first == x && dist[a].second > z) continue;
-		for (auto p : G[a]) {
-			tie(y, b) = p;
-			if (chmin(dist[b].first, x+1)) dist[b].second = z+y, PQ.push(make_pair(make_pair(x+1, z+y), b));
-			else if (dist[b].first == x+1 && chmax(dist[b].second, z+y)) PQ.push(make_pair(make_pair(x+1, z+y), b));
-		}
-	}
-}

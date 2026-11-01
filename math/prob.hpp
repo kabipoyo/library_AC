@@ -27,6 +27,7 @@ template<> inline double _zero<double>() { return 0.0; }
 
 template<class T>
 T ipow(T base, long long exp) {
+	assert(exp >= 0);
 	T res = _one<T>();
 	while (exp) {
 		if (exp & 1LL) res *= base;
@@ -66,17 +67,23 @@ T negbin_exp(long long k, T p) {
 template<class T>
 struct Comb {
 	std::vector<T> fact, ifact;
-	Comb(int n = 0) { if (n) init(n); }
+	Comb(int n = 0) { init(n); }
 	void init(int n) {
+		assert(n >= 0);
+		// 浮動小数点版は階乗が有限で、逆階乗が0にならない範囲で使用。
 		fact.resize(n + 1);
 		ifact.resize(n + 1);
 		fact[0] = _one<T>();
 		for (int i = 1; i <= n; i++) fact[i] = fact[i - 1] * T(i);
 		ifact[n] = _one<T>() / fact[n];
+		if constexpr (std::is_floating_point_v<T>) {
+			assert(std::isfinite(fact[n]) && ifact[n] > T(0));
+		}
 		for (int i = n; i >= 1; i--) ifact[i - 1] = ifact[i] * T(i);
 	}
 	T operator()(int n, int k) const {
 		if (k < 0 || k > n) return _zero<T>();
+		assert(n >= 0 && n < (int)fact.size());
 		return fact[n] * ifact[k] * ifact[n - k];
 	}
 };

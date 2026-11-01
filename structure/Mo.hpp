@@ -13,12 +13,12 @@
  *
  * 使い方：
 M = max((lint)1, N/max((lint)sqrt(Q), (lint)1));
-sort(all(p), func);
+sort(all(p), mo_tuple_less); // pairの場合はmo_pair_less
  */
 #pragma once
 #include "base.hpp"
-int M;  //分割するひとつひとつの区間サイズ
-bool func(const tuple<lint, lint, lint>& lhs, const tuple<lint, lint, lint>& rhs) {
+int M = 1;  // 分割する区間サイズ。必ず1以上。
+bool mo_tuple_less(const tuple<lint, lint, lint>& lhs, const tuple<lint, lint, lint>& rhs) {
 	lint a, b, c, x, y, z;
 	tie(a, b, c) = lhs;
 	tie(x, y, z) = rhs;
@@ -27,8 +27,7 @@ bool func(const tuple<lint, lint, lint>& lhs, const tuple<lint, lint, lint>& rhs
 	return false;
 }
 
-int M;  //分割するひとつひとつの区間サイズ
-bool func(const pair<int, int>& lhs, const pair<int, int>& rhs) {
+bool mo_pair_less(const pair<int, int>& lhs, const pair<int, int>& rhs) {
 	if (lhs.first / M < rhs.first / M) return true;
 	if (lhs.first / M == rhs.first / M && lhs.second < rhs.second) return true;
 	return false;

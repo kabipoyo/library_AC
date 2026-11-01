@@ -1,11 +1,11 @@
-/* tree_diamiter : bfs を用いて木の直径を求める
+/* tree_diameter : bfs を用いて木の直径を求める
 	計算量: O(N)
 */
 #define mp make_pair
 using pint = pair<int, int>;
 vector<int> dist;
 int bfs(int root) {
-	int a=-1, b=0, x, y, N = G.size();
+	int a=root, b=0, x, y, N = G.size();
 	dist.clear();
 	dist.resize(N, -1);
 	queue<int> Q;
@@ -18,10 +18,13 @@ int bfs(int root) {
 		}
 		if (chmax(b, dist[x])) a = x;
 	}
-	return x;  // a じゃない？
+	return a;
 }
-pair<int, int> tree_diamiter() {
+pair<int, int> tree_diameter() {
+	if (G.empty()) return {-1, -1};
 	int p = bfs(0);
 	int q = bfs(p);
 	return make_pair(p, q);
 }
+// 以前の呼び出し名との互換用。新規コードではtree_diameterを使用。
+pair<int, int> tree_diamiter() { return tree_diameter(); }

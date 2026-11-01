@@ -10,7 +10,7 @@ struct SuccinctIndexableDictionary {
 
 	SuccinctIndexableDictionary() = default;
 
-	SuccinctIndexableDictionary(size_t length) : length(length), blocks((length + 31) >> 5) {
+	SuccinctIndexableDictionary(size_t length) : length(length), blocks((length >> 5) + 1) {
 		bit.assign(blocks, 0U);
 		sum.assign(blocks, 0U);
 	}
@@ -43,11 +43,12 @@ struct SuccinctIndexableDictionary {
  * @brief WaveletMatrix：配列に対していろいろなクエリがO(logV)でできる
  *
  * @tparam T 配列の型、lintで良い
- * @tparam MAXLOG log(N)を入れる
+ * @tparam MAXLOG 値を表すビット数。値域は [0, 2^MAXLOG)。
  * @details 後述のを使えばよい
  */
 template< typename T, int MAXLOG >
 struct WaveletMatrix {
+	static_assert(0 < MAXLOG && MAXLOG <= numeric_limits<T>::digits);
 	size_t length;
 	SuccinctIndexableDictionary matrix[MAXLOG];
 	int mid[MAXLOG];
@@ -55,6 +56,7 @@ struct WaveletMatrix {
 	WaveletMatrix() = default;
 
 	WaveletMatrix(vector< T > v) : length(v.size()) {
+		for (T x : v) assert(x >= 0 && (__uint128_t)x < (__uint128_t(1) << MAXLOG));
 		vector< T > l(length), r(length);
 		for(int level = MAXLOG - 1; level >= 0; level--) {
 			matrix[level] = SuccinctIndexableDictionary(length + 1);
@@ -97,6 +99,7 @@ struct WaveletMatrix {
 
 	// count i s.t. (0 <= i < r) && v[i] == x
 	int rank(const T &x, int r) {
+		if (x < 0 || (__uint128_t)x >= (__uint128_t(1) << MAXLOG)) return 0;
 		int l = 0;
 		for(int level = MAXLOG - 1; level >= 0; level--) {
 			tie(l, r) = succ((x >> level) & 1, l, r, level);
@@ -127,6 +130,8 @@ struct WaveletMatrix {
 
 	// count i s.t. (l <= i < r) && (v[i] < upper)
 	int range_freq(int l, int r, T upper) {
+		if (upper <= 0) return 0;
+		if ((__uint128_t)upper >= (__uint128_t(1) << MAXLOG)) return r - l;
 		int ret = 0;
 		for(int level = MAXLOG - 1; level >= 0; level--) {
 			bool f = ((upper >> level) & 1);
@@ -158,7 +163,7 @@ struct WaveletMatrix {
  * @brief WaveletMatrix：配列に対していろいろなクエリがO(logV)でできる
  *
  * @tparam T 配列の型、lintで良い
- * @tparam MAXLOG log(N)を入れる
+ * @tparam MAXLOG 圧縮後の値を表すビット数。異なる値の数 <= 2^MAXLOG。
  * @see SuccinctIndexableDictionary
  * @details
 使い方：

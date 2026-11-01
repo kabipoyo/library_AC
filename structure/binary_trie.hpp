@@ -2,7 +2,7 @@
  * @brief 整数をビット列とみなして, トライ木のように持つデータ構造.
  *
  * @tparam T 整数の型、lintで良い
- * @tparam MAX_LOG 2進数で何桁になり得るか
+ * @tparam MAX_LOG 最上位ビットの位置（桁数-1）。非負整数を格納する。
  * @tparam D intで良い
  * @author ei1333
  * @details

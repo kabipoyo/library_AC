@@ -1,4 +1,10 @@
+// https://github.com/kabipoyo/library_AC/blob/master/math/geometry.hpp
 #pragma once
+
+// 整数座標は絶対値10^9以下を想定。積・面積・交点の分子は128bit。
+// i128の戻り値をcoutに直接渡さず、範囲を確認して変換する。
+using i128 = __int128_t;
+i128 geometry_abs(i128 x) { return x < 0 ? -x : x; }
 
 typedef int64_t lint;
 using pint = pair<lint, lint>;
@@ -28,26 +34,26 @@ bool operator!=(const Point& a, const Point& b) {
 }
 
 // 内積
-lint dot(Point a, Point b) {
-	return a.px*b.px+a.py*b.py;
+i128 dot(Point a, Point b) {
+	return i128(a.px)*b.px+i128(a.py)*b.py;
 }
 
 // 外積
-lint crs(Point a, Point b) {
-	return a.px*b.py-a.py*b.px;
+i128 crs(Point a, Point b) {
+	return i128(a.px)*b.py-i128(a.py)*b.px;
 }
 
 // ベクトルの長さの2乗
-lint norm2(Point a) {
+i128 norm2(Point a) {
 	return dot(a, a);
 }
 
 // 2点間距離の2乗
-lint dist2(Point a, Point b) {
+i128 dist2(Point a, Point b) {
 	return norm2(a-b);
 }
 
-int sgn(lint x) {
+int sgn(i128 x) {
 	if (x > 0) return 1;
 	if (x < 0) return -1;
 	return 0;
@@ -62,8 +68,8 @@ int orientation(Point a, Point b, Point c) {
 }
 
 // 三角形の面積の2倍
-lint calc_triangle(Point a, Point b, Point c) {
-	return abs(crs(b-a, c-a));
+i128 calc_triangle(Point a, Point b, Point c) {
+	return geometry_abs(crs(b-a, c-a));
 }
 
 // 3点が一直線上か
@@ -150,14 +156,15 @@ bool obtuse_angle(Point a, Point b, Point c) {
 
 struct Line {
 	// ax+by=c
-	lint a, b, c;
+	lint a, b;
+	i128 c;
 };
 
 // 異なる2点 p, q を通る直線
 Line line_through(Point p, Point q) {
 	lint a=q.py-p.py;
 	lint b=p.px-q.px;
-	lint c=a*p.px+b*p.py;
+	i128 c=i128(a)*p.px+i128(b)*p.py;
 
 	return {a, b, c};
 }
@@ -166,7 +173,7 @@ Line line_through(Point p, Point q) {
 Line line_from_direction(Point p, Point dir) {
 	lint a=-dir.py;
 	lint b=dir.px;
-	lint c=a*p.px+b*p.py;
+	i128 c=i128(a)*p.px+i128(b)*p.py;
 
 	return {a, b, c};
 }
@@ -175,7 +182,7 @@ Line line_from_direction(Point p, Point dir) {
 Line line_from_normal(Point p, Point normal) {
 	lint a=normal.px;
 	lint b=normal.py;
-	lint c=a*p.px+b*p.py;
+	i128 c=i128(a)*p.px+i128(b)*p.py;
 
 	return {a, b, c};
 }
@@ -185,24 +192,24 @@ Line line_from_normal(Point p, Point normal) {
 Line perpendicular_bisector(Point p, Point q) {
 	lint a=2*(q.px-p.px);
 	lint b=2*(q.py-p.py);
-	lint c=q.px*q.px+q.py*q.py-p.px*p.px-p.py*p.py;
+	i128 c=norm2(q)-norm2(p);
 
 	return {a, b, c};
 }
 
 // 点 p が直線 l 上にあるか
 bool on_line(Line l, Point p) {
-	return l.a*p.px+l.b*p.py == l.c;
+	return i128(l.a)*p.px+i128(l.b)*p.py == l.c;
 }
 
 // 2直線が平行か
 bool lines_parallel(Line l1, Line l2) {
-	return l1.a*l2.b == l1.b*l2.a;
+	return i128(l1.a)*l2.b == i128(l1.b)*l2.a;
 }
 
 // 2直線が同一直線か
 bool same_line(Line l1, Line l2) {
-	return l1.a*l2.b == l1.b*l2.a
+	return i128(l1.a)*l2.b == i128(l1.b)*l2.a
 		&& l1.a*l2.c == l1.c*l2.a
 		&& l1.b*l2.c == l1.c*l2.b;
 }
@@ -214,11 +221,11 @@ struct PointD {
 // 2直線の交点
 // 平行なら nullopt
 optional<PointD> line_intersection(Line l1, Line l2) {
-	lint det=l1.a*l2.b-l2.a*l1.b;
+	i128 det=i128(l1.a)*l2.b-l2.a*l1.b;
 	if (det == 0) return nullopt;
 
-	lint x_num=l1.c*l2.b-l2.c*l1.b;
-	lint y_num=l1.a*l2.c-l2.a*l1.c;
+	i128 x_num=l1.c*l2.b-l2.c*l1.b;
+	i128 y_num=l1.a*l2.c-l2.a*l1.c;
 
 	return PointD{
 		(long double)x_num/det,
@@ -239,7 +246,14 @@ optional<PointD> segment_intersection_point(Point a, Point b, Point c, Point d) 
 	Line l1=line_through(a, b);
 	Line l2=line_through(c, d);
 
-	if (lines_parallel(l1, l2)) return nullopt;
+	if (lines_parallel(l1, l2)) {
+        vector<Point> common;
+        for (Point p : {a, b, c, d}) if (on_segment(a, b, p) && on_segment(c, d, p))
+            common.push_back(p);
+        sort(all(common)); common.erase(unique(all(common)), common.end());
+        if (common.size() == 1) return PointD{(long double)common[0].px, (long double)common[0].py};
+        return nullopt;
+    }
 
 	return line_intersection(l1, l2);
 }
@@ -250,6 +264,7 @@ long double distance(Point a, Point b) {
 
 // 点 p と直線 ab の距離
 long double distance_point_line(Point p, Point a, Point b) {
+	assert(a != b);
 	long double numerator=abs((long double)crs(b-a, p-a));
 	long double denominator=sqrtl((long double)norm2(b-a));
 
@@ -268,6 +283,7 @@ long double distance_point_segment(Point p, Point a, Point b) {
 
 // 点 p の直線 ab への射影
 PointD projection(Point p, Point a, Point b) {
+	assert(a != b);
 	Point ab=b-a;
 	long double t=(long double)dot(p-a, ab)/norm2(ab);
 
@@ -299,7 +315,7 @@ lint manhattan_distance_rotated(Point a, Point b) {
 	return max(abs(ax-bx), abs(ay-by));
 }
 
-constexpr long double PI=acosl(-1.0L);
+constexpr long double PI = numbers::pi_v<long double>;
 
 long double deg_to_rad(long double degree) {
 	return degree*PI/180.0L;
@@ -336,7 +352,7 @@ bool argument_cmp(const Point& a, const Point& b) {
 
 	if (ah != bh) return ah < bh;
 
-	lint cross=crs(a, b);
+	i128 cross=crs(a, b);
 	if (cross != 0) return cross > 0;
 
 	return norm2(a) < norm2(b);

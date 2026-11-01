@@ -1,3 +1,4 @@
+#pragma once
 #include <bits/stdc++.h>
 #include <atcoder/all>
 using namespace std;
@@ -5,6 +6,7 @@ using namespace atcoder;
 typedef int64_t lint;
 #define rep(i, n) for(lint i=0; i<n; i++)
 #define repx(i, l, n) for(lint i=l; i<n; i++)
+#define rev(i, n) for(lint i=(lint)(n)-1; i>=0; i--)
 #define all(v) v.begin(), v.end()
 #define show(x) cout << #x << ": " << x << endl;
 #define list(x) cout << #x << ": " << x << "  ";

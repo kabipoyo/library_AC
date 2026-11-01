@@ -36,18 +36,23 @@ template<class T> inline int binary_search_max(vector<T> &v, T key) {
 	return ok;
 }
 
-// 原点からの極座標の角度の「大きい順」に番号を付ける（0<=Θ<=π/2）
-// 2πまでいけるっぽい　https://yukicoder.me/submissions/881877 <- 嘘かも
-using pint = pair<lint, lint>;
-using vp = vector<pint>;
+// 偏角 [0, 2pi) の大きい順。原点は末尾。同じ方向は座標順。
+// 座標の絶対値10^9以下。通常の反時計回りソートはmath/geometry.hppも参照。
 map<pint, lint> polar_sort(vp v) {
-	sort(all(v), [](auto const& lhs, auto const& rhs) {
-		return lhs.first*rhs.second < rhs.first*lhs.second;
-	});
-	map<pint, lint> m;
-	lint a = 0;
-	for (auto p : v) m[p] = ++a;
-	return m;
+    sort(all(v), [](const pint& a, const pint& b) {
+        bool az = a.first == 0 && a.second == 0;
+        bool bz = b.first == 0 && b.second == 0;
+        if (az || bz) return !az && bz;
+        auto half = [](const pint& p) { return p.second < 0 || (p.second == 0 && p.first < 0); };
+        if (half(a) != half(b)) return half(a) > half(b);
+        __int128 cross = __int128(a.first)*b.second - __int128(b.first)*a.second;
+        if (cross != 0) return cross < 0;
+        return a < b;
+    });
+    map<pint, lint> result;
+    lint index = 0;
+    for (auto p : v) result[p] = ++index;
+    return result;
 }
 
 // 単位円の[0～2π)までソートする

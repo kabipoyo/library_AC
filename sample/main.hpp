@@ -1,22 +1,5 @@
-
-#define mp make_pair
-#define mt make_tuple
-using pint = pair<lint, lint>;
-using vp = vector<pint>;
-using tint = tuple<lint, lint, lint>;
-using vt = vector<tint>;
-#define rev(i, n) for(lint i=n-1; i>=0; i--)
-
-using mint = modint1000000007;
-using mint = modint998244353;
-using vm = vector<mint>;
-
-constexpr int INF = INT_MAX/2;
-constexpr lint LINF = LLONG_MAX/2;
-
-template<class T> inline void vvout(vector<T> v) {
-	rep(i, v.size()) { rep(j, v[i].size()) { cout << v.at(i).at(j) << ' '; } cout << endl; }
-}
+// base.hppの共通定義をコピーした後に、必要な使用例だけを選ぶ。
+// mintの法はbase.hpp側で選択する。
 
 // sqrt(lint)の精度は足りなくなるのでこれを使う
 a = sqrtl(x);

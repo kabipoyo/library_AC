@@ -4,7 +4,7 @@
 vector<lint> dist;
 void bfs(int root) {
 	lint x, y, z, N = G.size();
-	dist.resize(N, -1);
+	dist.assign(N, -1);
 	queue<int> Q;
 	Q.push(root), dist[root] = 0;
 	while (!Q.empty()) {
@@ -16,35 +16,23 @@ void bfs(int root) {
 	}
 }
 
-// root からの距離算出
-// G[src][i] = {dst, dist};
-vector<lint> dist;
-void bfs_dist(int root) {
-	lint x, y, z, N = G.size();
-	queue<int> Q;
-	dist.resize(N, -1);
-	Q.push(root), dist[root] = 0;
-	while (!Q.empty()) {
-		x = Q.front(); Q.pop();
-		rep(i, G[x].size()) {
-			tie(y, z) = G[x][i];
-			if (dist[y] == -1) { Q.push(y); dist[y] = dist[x]+z; }
-		}
-	}
-}
-
-// dist配列があるときに、root から node の最短経路を復元する
+// 無向・重みなしグラフ専用。直前のbfs(root)のdistを使う。
+// 到達不能なら空配列。逆辺のない有向グラフには使わない。
 vi root_to_node(int root, int node) {
+	if (dist[node] < 0) return {};
 	vi v = {node};
-	while (dist[node]) {
+	while (node != root) {
+		bool found = false;
 		int d = dist[node];
 		rep(i, G[node].size()) {
 			if (dist[G[node][i]] == d-1) {
 				v.pb(G[node][i]);
 				node = G[node][i];
+				found = true;
 				break;
 			}
 		}
+		if (!found) return {};
 	}
 	reverse(all(v));
 	return v;

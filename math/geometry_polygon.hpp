@@ -1,6 +1,7 @@
-#pragma once
+// https://github.com/kabipoyo/library_AC/blob/master/math/geometry_polygon.hpp
+// geometry.hpp を先にコピーすること
 
-// geometry_basic.hpp を先に読み込むこと
+#pragma once
 
 // 凸包
 // 一直線上の途中の点は除外する
@@ -54,8 +55,8 @@ vector<Point> get_convex_hull(vector<Point> v) {
 
 // 多角形の符号付き面積の2倍
 // 反時計回りなら正
-lint polygon_area2_signed(const vector<Point>& polygon) {
-	lint res=0;
+i128 polygon_area2_signed(const vector<Point>& polygon) {
+	i128 res=0;
 	int n=polygon.size();
 
 	rep(i, n) {
@@ -66,8 +67,8 @@ lint polygon_area2_signed(const vector<Point>& polygon) {
 }
 
 // 多角形の面積の2倍
-lint polygon_area2(const vector<Point>& polygon) {
-	return abs(polygon_area2_signed(polygon));
+i128 polygon_area2(const vector<Point>& polygon) {
+	return geometry_abs(polygon_area2_signed(polygon));
 }
 
 // 多角形が反時計回りか
@@ -117,8 +118,8 @@ int point_in_convex_polygon(const vector<Point>& polygon, Point p) {
 
 	Point origin=polygon[0];
 
-	lint left=crs(polygon[1]-origin, p-origin);
-	lint right=crs(polygon[n-1]-origin, p-origin);
+	i128 left=crs(polygon[1]-origin, p-origin);
+	i128 right=crs(polygon[n-1]-origin, p-origin);
 
 	if (left < 0 || right > 0) return 0;
 
@@ -143,7 +144,7 @@ int point_in_convex_polygon(const vector<Point>& polygon, Point p) {
 		}
 	}
 
-	lint cross=crs(
+	i128 cross=crs(
 		polygon[high]-polygon[low],
 		p-polygon[low]
 	);
@@ -172,22 +173,22 @@ int point_circle_relation(Point p, Point center, lint radius2) {
 }
 
 // 4点が同一円周上にあるか
-// a, b, c が一直線なら false
+// a, b, c が一直線なら false。4次式なので座標の絶対値は10^8以下。
 bool concyclic(Point a, Point b, Point c, Point d) {
 	if (collinear(a, b, c)) return false;
 
-	lint ax=a.px-d.px;
-	lint ay=a.py-d.py;
-	lint bx=b.px-d.px;
-	lint by=b.py-d.py;
-	lint cx=c.px-d.px;
-	lint cy=c.py-d.py;
+	i128 ax=a.px-d.px;
+	i128 ay=a.py-d.py;
+	i128 bx=b.px-d.px;
+	i128 by=b.py-d.py;
+	i128 cx=c.px-d.px;
+	i128 cy=c.py-d.py;
 
-	lint a2=ax*ax+ay*ay;
-	lint b2=bx*bx+by*by;
-	lint c2=cx*cx+cy*cy;
+	i128 a2=ax*ax+ay*ay;
+	i128 b2=bx*bx+by*by;
+	i128 c2=cx*cx+cy*cy;
 
-	lint det=
+	i128 det=
 		ax*(by*c2-b2*cy)
 		-ay*(bx*c2-b2*cx)
 		+a2*(bx*cy-by*cx);

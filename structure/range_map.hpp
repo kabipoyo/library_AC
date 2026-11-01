@@ -36,6 +36,9 @@ public:
 	}
 	// insert segment [l, r]
 	void insert(lint l, lint r) {
+		assert(l <= r);
+		// 隣接判定での +/-1 を安全にするため、端点はlintの両端を除く。
+		assert(l > numeric_limits<lint>::min() && r < numeric_limits<lint>::max());
 		auto itl = upper_bound(l), itr = upper_bound(r + flagToMergeAdjacentSegment);
 		if (itl != begin()) {
 			if ((--itl)->second < l - flagToMergeAdjacentSegment) ++itl;
@@ -49,12 +52,13 @@ public:
 	}
 	// remove segment [l, r]
 	void remove(lint l, lint r) {
+		assert(l <= r);
 		auto itl = upper_bound(l), itr = upper_bound(r);
 		if (itl != begin()) {
 			if ((--itl)->second < l) ++itl;
 		}
 		if (itl == itr) return;
-		int tl = min(l, itl->first), tr = max(r, prev(itr)->second);
+		lint tl = min(l, itl->first), tr = max(r, prev(itr)->second);
 		erase(itl, itr);
 		if (tl < l) (*this)[tl] = l - 1;
 		if (r < tr) (*this)[r + 1] = tr;

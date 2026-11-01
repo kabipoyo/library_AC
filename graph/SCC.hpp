@@ -2,12 +2,16 @@
 // 有向グラフをループ毎に分解する
 // O(N+M)
 vi used, route;
-void rec(int x) {
-	used[x]++;
-	for (auto t : G[x]) {
-		if (used[t] == -1) rec(t);
-	}
-	route.pb(x);
+// 帰りがけ順を明示スタックで作る。再帰によるスタック枯渇を避ける。
+void rec(int root) {
+    vector<pair<int, int>> stack = {{root, 0}}; used[root] = 0;
+    while (!stack.empty()) {
+        int v = stack.back().first;
+        int &i = stack.back().second;
+        if (i == (int)G[v].size()) { route.push_back(v); stack.pop_back(); continue; }
+        int to = G[v][i++];
+        if (used[to] == -1) { used[to] = 0; stack.push_back({to, 0}); }
+    }
 }
 vi dfs(int x) {
 	used[x]++;
@@ -28,7 +32,8 @@ vi dfs(int x) {
 }
 vvi scc() {
 	int N = G.size();
-	used.resize(N, -1);
+	used.assign(N, -1);
+	route.clear();
 	rep(i, N) {
 		if (used[i] == -1) rec(i);
 	}

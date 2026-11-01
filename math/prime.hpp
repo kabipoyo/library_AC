@@ -4,7 +4,8 @@
 struct Sieve {
 	int n;
 	vector<lint> p;
-	Sieve(int n=1):n(n), p(n+1) {
+	Sieve(int n=1):n(n), p(max(n, 1)+1) {
+		assert(n >= 0);
 		p.at(0) = -1, p.at(1) = -1;
 		for(lint i=2; i<=n; i++) {
 			if(!p.at(i)) {
@@ -15,8 +16,9 @@ struct Sieve {
 			}
 		}
 	}
-	bool isPrime(int x) { return p.at(x) == x;}
+	bool isPrime(int x) { assert(0 <= x && x <= n); return x >= 2 && p.at(x) == x;}
 	vector<lint> factorList(int x) {
+		assert(1 <= x && x <= n);
 		vector<lint> v;
 		while (x != 1) {
 			v.push_back(p.at(x));
@@ -25,6 +27,7 @@ struct Sieve {
 		return v;
 	}
 	vector<lint> factor(int x) {
+		assert(1 <= x && x <= n);
 		vector<lint> v;
 		while (x != 1) {
 			int t = p.at(x);
@@ -37,8 +40,9 @@ struct Sieve {
 
 // 約数
 vector<lint> divisor(lint n) {
+	assert(n >= 1);
 	vector<lint> v;
-	for (lint i = 1; i*i <= n; i++) {
+	for (lint i = 1; i <= n/i; i++) {
 		if (n % i == 0) {
 			v.push_back(i);
 			if (i*i != n) v.push_back(n/i);
@@ -48,105 +52,36 @@ vector<lint> divisor(lint n) {
 	return v;
 }
 
-// longlong prime
+// 64bit整数の試し割り。O(sqrt(n))時間、O(1)補助空間。
+// 巨大な素数には時間がかかる（高速な64bit素数判定ではない）。
 bool isPrime(lint n) {
-	if (n < 2) return false;
-	if (n == 2) return true;
-	if (!(n % 2)) return false;
-	int rn = sqrt(n);
-	vector<bool> v(rn+1);
-	for(lint i = 3; i <= rn; i += 2) {
-		if(!v.at(i)) {
-			if (!(n % i)) return false;
-			v.at(i) = 1;
-			for(lint j = i*i; j <= rn; j += i) {
-				v.at(j) = 1;
-			}
-		}
-	}
-	return true;
+    if (n < 2) return false;
+    if (n % 2 == 0) return n == 2;
+    for (lint i = 3; i <= n / i; i += 2) if (n % i == 0) return false;
+    return true;
 }
 
-// 素因数を返す　返り値に１は入らない
+// 重複なしの素因数。n >= 1。
 vector<lint> factor(lint n) {
-	vector<lint> V;
-	if (!(n % 2)) {
-		V.push_back(2);
-		while (!(n % 2)) n /= 2;
-	}
-	int rn = sqrt(n);
-	vector<bool> v(rn+1);
-	for(lint i = 3; i <= rn && n > 1; i += 2) {
-		if(!v.at(i)) {
-			if (!(n % i)) {
-				V.push_back(i);
-				while (!(n % i)) n /= i;
-			}
-			v.at(i) = 1;
-			for(lint j = i*i; j <= rn; j += i) {
-				v.at(j) = 1;
-			}
-		}
-	}
-	if (n != 1) V.push_back(n);
-	return V;
+    assert(n >= 1);
+    vector<lint> result;
+    for (lint p = 2; p <= n / p; p += (p == 2 ? 1 : 2)) {
+        if (n % p) continue;
+        result.push_back(p);
+        while (n % p == 0) n /= p;
+    }
+    if (n > 1) result.push_back(n);
+    return result;
 }
 
-// 素因数分解する　返り値に１は入らない
+// 重複ありの素因数。n >= 1。
 vector<lint> factorList(lint n) {
-	vector<lint> V;
-	if (!(n % 2)) {
-		while (!(n % 2)) {
-			V.push_back(2);
-			n /= 2;
-		}
-	}
-	int rn = sqrt(n);
-	vector<bool> v(rn+1);
-	for(lint i = 3; i <= rn && n > 1; i += 2) {
-		if(!v.at(i)) {
-			if (!(n % i)) {
-				while (!(n % i)) {
-					V.push_back(i);
-					n /= i;
-				}
-			}
-			v.at(i) = 1;
-			for(lint j = i*i; j <= rn; j += i) {
-				v.at(j) = 1;
-			}
-		}
-	}
-	if (n != 1) V.push_back(n);
-	return V;
+    assert(n >= 1);
+    vector<lint> result;
+    for (lint p = 2; p <= n / p; p += (p == 2 ? 1 : 2)) {
+        while (n % p == 0) { result.push_back(p); n /= p; }
+    }
+    if (n > 1) result.push_back(n);
+    return result;
 }
 
-// ゼータ・メビウス変換
-// https://atcoder.jp/contests/abc349/tasks/abc349_f
-void zeta_transform(vi &v, int s) {
-	rep(i, s) {
-		rep(j, 1<<s) {
-			if (((j >> i) & 1) == 0) {
-				v[j | (1<<i)] += v[j];
-			}
-		}
-	}
-}
-
-void mobius_transform(vm &v, int s) {
-	rep(i, s) {
-		rep(j, 1<<s) {
-			if (((j >> i) & 1) == 0) {
-				v[j | (1<<i)] -= v[j];
-			}
-		}
-	}
-}
-
-vm zeta_mobius(vi &v, int s) {
-	zeta_transform(v, s);
-	vm h(1<<s);
-	rep(i, 1<<s) h[i] = ((mint)2).pow(v[i]);
-	mobius_transform(h, s);
-	return h;
-}

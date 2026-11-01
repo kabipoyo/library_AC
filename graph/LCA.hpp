@@ -9,6 +9,7 @@ struct LCA {
 	// 初期化
 	void init(int root = 0) {
 		int V = G.size();
+		assert(V > 0 && 0 <= root && root < V);
 		int K = 1;
 		while ((1 << K) < V) K++;
 		parent.assign(K, vector<int>(V, -1));
@@ -25,13 +26,16 @@ struct LCA {
 		}
 	}
 	// 根からの距離と1つ先の頂点を求める
-	void dfs(int v, int p, int d) {
-		parent[0][v] = p;
-		dist[v] = d;
-		for (auto e : G[v]) {
-			if (e != p) dfs(e, v, d + 1);
-		}
-	}
+    // 無向木専用。明示スタックで深い木でも再帰を使わない。
+    void dfs(int v, int p, int d) {
+        vector<int> stack = {v}; parent[0][v] = p; dist[v] = d;
+        while (!stack.empty()) {
+            int x = stack.back(); stack.pop_back();
+            for (int to : G[x]) if (to != parent[0][x]) {
+                parent[0][to] = x; dist[to] = dist[x]+1; stack.push_back(to);
+            }
+        }
+    }
 	int query(int u, int v) {
 		if (dist[u] < dist[v]) swap(u, v);  // u の方が深いとする
 		int K = parent.size();

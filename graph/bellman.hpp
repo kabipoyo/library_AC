@@ -16,7 +16,7 @@ using pint = pair<lint, lint>;
 vector<vector<pair<lint, lint>>> G;
 void make_dist_graph(int N, int M) {
 	lint x, y, z;
-	G.resize(N);
+	G.assign(N, {});
 	rep(i, M) {
 		cin >> x >> y >> z;
 		x--, y--;
@@ -25,7 +25,7 @@ void make_dist_graph(int N, int M) {
 }
 
 bool bellman_ford(int N, int s, vector<lint> &dis) {
-	dis.resize(N, LINF);
+	dis.assign(N, LINF);
 	dis[s] = 0;
 	lint c, x, z;
 	for (c = 0; c < N; c++) {

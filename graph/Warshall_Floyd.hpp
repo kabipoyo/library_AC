@@ -1,6 +1,8 @@
 
-vvi dist(10000, vi(10000));
+// 無向・非負重み。update_distも同じ前提。有限距離はLINF未満。
+vvi dist;
 void Floyd_Warshall(lint N, lint M) {
+	dist.assign(N, vi(N, LINF));
 	lint x, y, z;
 	rep(i, N) {
 		rep(j, N) {
@@ -17,7 +19,8 @@ void Floyd_Warshall(lint N, lint M) {
 	rep(k, N) {
 		rep(i, N) {
 			rep(j, N) {
-				chmin(dist[i][j], dist[i][k]+dist[k][j]);
+				if (dist[i][k] != LINF && dist[k][j] != LINF && dist[i][k] < LINF - dist[k][j])
+					chmin(dist[i][j], dist[i][k]+dist[k][j]);
 			}
 		}
 	}
@@ -31,7 +34,8 @@ void update_dist(lint N, int s, int t, lint C) {
 		for (int k : {s, t}) {
 			rep(i, N) {
 				rep(j, N) {
-					chmin(dist[i][j], dist[i][k]+dist[k][j]);
+					if (dist[i][k] != LINF && dist[k][j] != LINF && dist[i][k] < LINF - dist[k][j])
+						chmin(dist[i][j], dist[i][k]+dist[k][j]);
 				}
 			}
 		}
