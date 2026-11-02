@@ -56,33 +56,33 @@ vector<lint> divisor(lint n) {
 // 64bit整数の試し割り。O(sqrt(n))時間、O(1)補助空間。
 // 巨大な素数には時間がかかる（高速な64bit素数判定ではない）。
 bool isPrime(lint n) {
-    if (n < 2) return false;
-    if (n % 2 == 0) return n == 2;
-    for (lint i = 3; i <= n / i; i += 2) if (n % i == 0) return false;
-    return true;
+	if (n < 2) return false;
+	if (n % 2 == 0) return n == 2;
+	for (lint i = 3; i <= n / i; i += 2) if (n % i == 0) return false;
+	return true;
 }
 
 // 重複なしの素因数。n >= 1。
 vector<lint> factor(lint n) {
-    assert(n >= 1);
-    vector<lint> result;
-    for (lint p = 2; p <= n / p; p += (p == 2 ? 1 : 2)) {
-        if (n % p) continue;
-        result.push_back(p);
-        while (n % p == 0) n /= p;
-    }
-    if (n > 1) result.push_back(n);
-    return result;
+	assert(n >= 1);
+	vector<lint> result;
+	for (lint p = 2; p <= n / p; p += (p == 2 ? 1 : 2)) {
+		if (n % p) continue;
+		result.push_back(p);
+		while (n % p == 0) n /= p;
+	}
+	if (n > 1) result.push_back(n);
+	return result;
 }
 
 // 重複ありの素因数。n >= 1。
 vector<lint> factorList(lint n) {
-    assert(n >= 1);
-    vector<lint> result;
-    for (lint p = 2; p <= n / p; p += (p == 2 ? 1 : 2)) {
-        while (n % p == 0) { result.push_back(p); n /= p; }
-    }
-    if (n > 1) result.push_back(n);
-    return result;
+	assert(n >= 1);
+	vector<lint> result;
+	for (lint p = 2; p <= n / p; p += (p == 2 ? 1 : 2)) {
+		while (n % p == 0) { result.push_back(p); n /= p; }
+	}
+	if (n > 1) result.push_back(n);
+	return result;
 }
 

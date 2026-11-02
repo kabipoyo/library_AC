@@ -24,9 +24,9 @@ inline F composition(F f, F g) { return f + g; }
 inline F id() { return 0; }
 using Seg = atcoder::lazy_segtree<S, op, e, F, mapping, composition, id>;
 inline std::vector<S> make_data(const std::vector<long long>& a) {
-    std::vector<S> v; v.reserve(a.size());
-    for (auto x : a) v.push_back({x, 1});
-    return v;
+	std::vector<S> v; v.reserve(a.size());
+	for (auto x : a) v.push_back({x, 1});
+	return v;
 }
 inline std::vector<S> zeros(int n) { assert(n >= 0); return std::vector<S>(n, {0, 1}); }
 // Seg seg(zeros(n)); seg.apply(l,r,delta); auto sum = seg.prod(l,r).sum;
@@ -38,9 +38,9 @@ namespace acl_lazy_add_min {
 struct S { long long value; int len; };
 using F = long long;
 inline S op(S a, S b) {
-    if (!a.len) return b;
-    if (!b.len) return a;
-    return {std::min(a.value, b.value), a.len + b.len};
+	if (!a.len) return b;
+	if (!b.len) return a;
+	return {std::min(a.value, b.value), a.len + b.len};
 }
 inline S e() { return {std::numeric_limits<long long>::max(), 0}; }
 inline S mapping(F f, S x) { if (x.len) x.value += f; return x; }
@@ -48,9 +48,9 @@ inline F composition(F f, F g) { return f + g; }
 inline F id() { return 0; }
 using Seg = atcoder::lazy_segtree<S, op, e, F, mapping, composition, id>;
 inline std::vector<S> make_data(const std::vector<long long>& a) {
-    std::vector<S> v; v.reserve(a.size());
-    for (auto x : a) v.push_back({x, 1});
-    return v;
+	std::vector<S> v; v.reserve(a.size());
+	for (auto x : a) v.push_back({x, 1});
+	return v;
 }
 inline std::vector<S> zeros(int n) { assert(n >= 0); return std::vector<S>(n, {0, 1}); }
 // Seg seg(make_data(values)); seg.apply(l,r,delta); auto minimum = seg.prod(l,r).value;
@@ -62,9 +62,9 @@ namespace acl_lazy_add_max {
 struct S { long long value; int len; };
 using F = long long;
 inline S op(S a, S b) {
-    if (!a.len) return b;
-    if (!b.len) return a;
-    return {std::max(a.value, b.value), a.len + b.len};
+	if (!a.len) return b;
+	if (!b.len) return a;
+	return {std::max(a.value, b.value), a.len + b.len};
 }
 inline S e() { return {std::numeric_limits<long long>::lowest(), 0}; }
 inline S mapping(F f, S x) { if (x.len) x.value += f; return x; }
@@ -72,9 +72,9 @@ inline F composition(F f, F g) { return f + g; }
 inline F id() { return 0; }
 using Seg = atcoder::lazy_segtree<S, op, e, F, mapping, composition, id>;
 inline std::vector<S> make_data(const std::vector<long long>& a) {
-    std::vector<S> v; v.reserve(a.size());
-    for (auto x : a) v.push_back({x, 1});
-    return v;
+	std::vector<S> v; v.reserve(a.size());
+	for (auto x : a) v.push_back({x, 1});
+	return v;
 }
 inline std::vector<S> zeros(int n) { assert(n >= 0); return std::vector<S>(n, {0, 1}); }
 // Seg seg(zeros(n)); seg.apply(l,r,delta); auto maximum = seg.prod(l,r).value;
@@ -92,9 +92,9 @@ inline F composition(F f, F g) { return f ? f : g; }
 inline F id() { return std::nullopt; }
 using Seg = atcoder::lazy_segtree<S, op, e, F, mapping, composition, id>;
 inline std::vector<S> make_data(const std::vector<long long>& a) {
-    std::vector<S> v; v.reserve(a.size());
-    for (auto x : a) v.push_back({x, 1});
-    return v;
+	std::vector<S> v; v.reserve(a.size());
+	for (auto x : a) v.push_back({x, 1});
+	return v;
 }
 inline std::vector<S> zeros(int n) { assert(n >= 0); return std::vector<S>(n, {0, 1}); }
 // seg.apply(l,r,F{value}); 0や負数も代入可。nulloptは「何もしない」。
@@ -106,9 +106,9 @@ namespace acl_lazy_assign_min {
 struct S { long long value; int len; };
 using F = std::optional<long long>;
 inline S op(S a, S b) {
-    if (!a.len) return b;
-    if (!b.len) return a;
-    return {std::min(a.value, b.value), a.len + b.len};
+	if (!a.len) return b;
+	if (!b.len) return a;
+	return {std::min(a.value, b.value), a.len + b.len};
 }
 inline S e() { return {std::numeric_limits<long long>::max(), 0}; }
 inline S mapping(F f, S x) { if (f && x.len) x.value = *f; return x; }
@@ -116,9 +116,9 @@ inline F composition(F f, F g) { return f ? f : g; }
 inline F id() { return std::nullopt; }
 using Seg = atcoder::lazy_segtree<S, op, e, F, mapping, composition, id>;
 inline std::vector<S> make_data(const std::vector<long long>& a) {
-    std::vector<S> v; v.reserve(a.size());
-    for (auto x : a) v.push_back({x, 1});
-    return v;
+	std::vector<S> v; v.reserve(a.size());
+	for (auto x : a) v.push_back({x, 1});
+	return v;
 }
 inline std::vector<S> zeros(int n) { assert(n >= 0); return std::vector<S>(n, {0, 1}); }
 // seg.apply(l,r,F{value}); auto minimum = seg.prod(l,r).value;
@@ -137,9 +137,9 @@ inline F composition(F f, F g) { return {f.a * g.a, f.a * g.b + f.b}; }
 inline F id() { return {1, 0}; }
 using Seg = atcoder::lazy_segtree<S, op, e, F, mapping, composition, id>;
 inline std::vector<S> make_data(const std::vector<Mint>& a) {
-    std::vector<S> v; v.reserve(a.size());
-    for (auto x : a) v.push_back({x, 1});
-    return v;
+	std::vector<S> v; v.reserve(a.size());
+	for (auto x : a) v.push_back({x, 1});
+	return v;
 }
 inline std::vector<S> zeros(int n) { assert(n >= 0); return std::vector<S>(n, {0, 1}); }
 // seg.apply(l,r,F{a,b}); 各値xをa*x+bへ変更。法はMintの別名で選ぶ。
@@ -153,21 +153,21 @@ struct F { std::optional<long long> assign; long long add; };
 inline S op(S a, S b) { return {a.sum + b.sum, a.len + b.len}; }
 inline S e() { return {0, 0}; }
 inline S mapping(F f, S x) {
-    if (f.assign) x.sum = *f.assign * x.len;
-    x.sum += f.add * x.len;
-    return x;
+	if (f.assign) x.sum = *f.assign * x.len;
+	x.sum += f.add * x.len;
+	return x;
 }
 inline F composition(F f, F g) {
-    if (f.assign) return f;
-    g.add += f.add;
-    return g;
+	if (f.assign) return f;
+	g.add += f.add;
+	return g;
 }
 inline F id() { return {std::nullopt, 0}; }
 using Seg = atcoder::lazy_segtree<S, op, e, F, mapping, composition, id>;
 inline std::vector<S> make_data(const std::vector<long long>& a) {
-    std::vector<S> v; v.reserve(a.size());
-    for (auto x : a) v.push_back({x, 1});
-    return v;
+	std::vector<S> v; v.reserve(a.size());
+	for (auto x : a) v.push_back({x, 1});
+	return v;
 }
 inline std::vector<S> zeros(int n) { assert(n >= 0); return std::vector<S>(n, {0, 1}); }
 // 加算: F{nullopt,delta}、代入: F{value,0}。代入後にaddを加える。

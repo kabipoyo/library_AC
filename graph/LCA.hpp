@@ -24,16 +24,16 @@ struct LCA {
 		}
 	}
 	// 根からの距離と1つ先の頂点を求める
-    // 無向木専用。明示スタックで深い木でも再帰を使わない。
-    void dfs(int v, int p, int d) {
-        vector<int> stack = {v}; parent[0][v] = p; dist[v] = d;
-        while (!stack.empty()) {
-            int x = stack.back(); stack.pop_back();
-            for (int to : G[x]) if (to != parent[0][x]) {
-                parent[0][to] = x; dist[to] = dist[x]+1; stack.push_back(to);
-            }
-        }
-    }
+	// 無向木専用。明示スタックで深い木でも再帰を使わない。
+	void dfs(int v, int p, int d) {
+		vector<int> stack = {v}; parent[0][v] = p; dist[v] = d;
+		while (!stack.empty()) {
+			int x = stack.back(); stack.pop_back();
+			for (int to : G[x]) if (to != parent[0][x]) {
+				parent[0][to] = x; dist[to] = dist[x]+1; stack.push_back(to);
+			}
+		}
+	}
 	int query(int u, int v) {
 		if (dist[u] < dist[v]) swap(u, v);  // u の方が深いとする
 		int K = parent.size();

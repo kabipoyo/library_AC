@@ -40,20 +40,20 @@ template<class T> inline int binary_search_max(vector<T> &v, T key) {
 // 偏角 [0, 2pi) の大きい順。順位は0から。原点は末尾。同じ方向は座標順。
 // 座標の絶対値10^9以下。通常の反時計回りソートはmath/geometry.hppも参照。
 map<pint, lint> polar_sort(vp v) {
-    sort(all(v), [](const pint& a, const pint& b) {
-        bool az = a.first == 0 && a.second == 0;
-        bool bz = b.first == 0 && b.second == 0;
-        if (az || bz) return !az && bz;
-        auto half = [](const pint& p) { return p.second < 0 || (p.second == 0 && p.first < 0); };
-        if (half(a) != half(b)) return half(a) > half(b);
-        __int128 cross = __int128(a.first)*b.second - __int128(b.first)*a.second;
-        if (cross != 0) return cross < 0;
-        return a < b;
-    });
-    map<pint, lint> result;
-    lint index = 0;
-    for (auto p : v) if (!result.count(p)) result[p] = index++;
-    return result;
+	sort(all(v), [](const pint& a, const pint& b) {
+		bool az = a.first == 0 && a.second == 0;
+		bool bz = b.first == 0 && b.second == 0;
+		if (az || bz) return !az && bz;
+		auto half = [](const pint& p) { return p.second < 0 || (p.second == 0 && p.first < 0); };
+		if (half(a) != half(b)) return half(a) > half(b);
+		__int128 cross = __int128(a.first)*b.second - __int128(b.first)*a.second;
+		if (cross != 0) return cross < 0;
+		return a < b;
+	});
+	map<pint, lint> result;
+	lint index = 0;
+	for (auto p : v) if (!result.count(p)) result[p] = index++;
+	return result;
 }
 
 // 単位円の[0～2π)までソートする

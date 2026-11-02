@@ -247,13 +247,13 @@ optional<PointD> segment_intersection_point(Point a, Point b, Point c, Point d) 
 	Line l2=line_through(c, d);
 
 	if (lines_parallel(l1, l2)) {
-        vector<Point> common;
-        for (Point p : {a, b, c, d}) if (on_segment(a, b, p) && on_segment(c, d, p))
-            common.push_back(p);
-        sort(all(common)); common.erase(unique(all(common)), common.end());
-        if (common.size() == 1) return PointD{(long double)common[0].px, (long double)common[0].py};
-        return nullopt;
-    }
+		vector<Point> common;
+		for (Point p : {a, b, c, d}) if (on_segment(a, b, p) && on_segment(c, d, p))
+			common.push_back(p);
+		sort(all(common)); common.erase(unique(all(common)), common.end());
+		if (common.size() == 1) return PointD{(long double)common[0].px, (long double)common[0].py};
+		return nullopt;
+	}
 
 	return line_intersection(l1, l2);
 }

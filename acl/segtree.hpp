@@ -50,10 +50,10 @@ using Seg = atcoder::segtree<S, op, e>;
 namespace acl_segtree_argmin {
 struct S { long long value; int index; };
 inline S op(S a, S b) {
-    if (a.index == -1) return b;
-    if (b.index == -1) return a;
-    if (a.value != b.value) return a.value < b.value ? a : b;
-    return a.index < b.index ? a : b;
+	if (a.index == -1) return b;
+	if (b.index == -1) return a;
+	if (a.value != b.value) return a.value < b.value ? a : b;
+	return a.index < b.index ? a : b;
 }
 inline S e() { return {0, -1}; }
 using Seg = atcoder::segtree<S, op, e>;
