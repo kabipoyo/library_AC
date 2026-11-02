@@ -16,7 +16,7 @@ void Floyd_Warshall(lint N, lint M, int input_base = 0) {
 	rep(i, M) {
 		cin >> x >> y >> z;
 		x -= input_base; y -= input_base;
-		assert(0 <= x && x < N && 0 <= y && y < N);
+		assert(0 <= x && x < N && 0 <= y && y < N && 0 <= z && z < LINF);
 		chmin(dist[x][y], z);
 		chmin(dist[y][x], z);
 	}
@@ -30,18 +30,20 @@ void Floyd_Warshall(lint N, lint M, int input_base = 0) {
 	}
 }
 
+// 構築済みの無向・非負重みの距離表へ1辺を追加/短縮。Nは構築時と同じ。
+// 更新前の2列を保存してO(N^2)で更新する。補助空間O(N)。削除・重み増加は不可。
 void update_dist(lint N, int s, int t, lint C) {
-	bool f = false;
-	if (chmin(dist[s][t], C)) f = true;
-	if (chmin(dist[t][s], C)) f = true;
-	if (f) {
-		for (int k : {s, t}) {
-			rep(i, N) {
-				rep(j, N) {
-					if (dist[i][k] != LINF && dist[k][j] != LINF && dist[i][k] < LINF - dist[k][j])
-						chmin(dist[i][j], dist[i][k]+dist[k][j]);
-				}
-			}
-		}
+	assert(N>=0 && N==(lint)dist.size());
+	assert(0<=s && s<N && 0<=t && t<N && 0<=C && C<LINF);
+	for (const auto& row:dist) { assert((lint)row.size()==N); }
+	if (C>=dist[s][t]) return;
+	vi to_s(N), to_t(N);
+	rep(i,N) { to_s[i]=dist[i][s]; to_t[i]=dist[i][t]; }
+	auto add=[](lint a, lint b) -> lint {
+		return a>=LINF-b ? LINF : a+b;
+	};
+	rep(i,N) rep(j,N) {
+		chmin(dist[i][j],add(add(to_s[i],C),to_t[j]));
+		chmin(dist[i][j],add(add(to_t[i],C),to_s[j]));
 	}
 }
